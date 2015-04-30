@@ -87,7 +87,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/04/29/新博客空间/" data-id="ci93f96yp0001ob83fl05vzc4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/04/29/新博客空间/" data-id="ci93gwy460008ti832i4vrudy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -132,7 +132,461 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/04/29/hello-world/" data-id="ci93f96x90000ob83qgfirjjt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/04/29/hello-world/" data-id="ci93gwy4s000kti8308yrknbs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e8-87-aa-e5-8a-a8-e8-8d-89-e7-a8-bf" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/15/e8-87-aa-e5-8a-a8-e8-8d-89-e7-a8-bf/" class="article-date">
+  <time datetime="2015-04-15T00:55:32.000Z" itemprop="datePublished">2015-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/DeJohn-Style/">DeJohn Style</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/15/e8-87-aa-e5-8a-a8-e8-8d-89-e7-a8-bf/">自动草稿</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/04/15/e8-87-aa-e5-8a-a8-e8-8d-89-e7-a8-bf/" data-id="ci93gwy52000oti83sjes3qod" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/17/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3/" class="article-date">
+  <time datetime="2015-03-17T07:00:49.000Z" itemprop="datePublished">2015-03-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS学习笔记/">iOS学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/17/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3/">iOS学习笔记：NSRunLoop的理解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>官方文档的定义是<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSRunLoop_Class/index.html#//apple_ref/doc/uid/TP40003725" target="_blank" rel="external">NSRunLoop</a>是用来管理线程中输入的资源，它是一个循环、可以处理事件。</p>
+<p>每个创建的多线程都会自己创建一个NSRunLoop。</p>
+<p>主线程中的NSRunLoop是默认开启的但是处于一种“等待”的状态（而不像一些命令行程序一样运行一次就结束了），当有信息输入时NSRunLoop才会发生响应，所以主线程不会被卡线程。</p>
+<p>在多线程中使用就必须手动管理了NSRunLoop了。</p>
+<p>下来是Run Loop的使用场合：<br>1. 使用port或是自定义的input source来和其他线程进行通信&lt;AFNetworking中有使用&gt;<br>2. 在线程（非主线程）中使用timer<br>3. 使用 performSelector…系列,</p>
+<p><pre class="lang:objc decode:true">- (void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay inModes:(NSArray *)modes;</pre></p>
+<ul>
+<li>(void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay;<br>4. 使用线程执行周期性工作<br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd">引用别人的一篇文章觉得不错：</div></li>
+</ul>
+<h1 id="-_(BOOL)runMode:(NSString_)mode_beforeDate:(NSDate_)limitDate_方法_详解"><span class="link_title"><a href="http://blog.csdn.net/wjsxiaoweige/article/details/38318733" target="_blank" rel="external"> - (BOOL)runMode:(NSString <em>)mode beforeDate:(NSDate </em>)limitDate 方法 详解 </a></span></h1><p></p>
+<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/17/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3/" data-id="ci93gwy490009ti831jhylfms" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9acategory-e4-b8-8eextension-e7-9a-84-e5-8c-ba-e5-88-ab" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/11/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9acategory-e4-b8-8eextension-e7-9a-84-e5-8c-ba-e5-88-ab/" class="article-date">
+  <time datetime="2015-03-11T09:18:49.000Z" itemprop="datePublished">2015-03-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS学习笔记/">iOS学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/11/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9acategory-e4-b8-8eextension-e7-9a-84-e5-8c-ba-e5-88-ab/">iOS学习笔记：Category与Extension的区别</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>很早就知道了Category和Extension了，虽然平常使用的频率还是可以的，但真正的区别也不是很清楚；</p>
+<p>于是乎查阅了相关资料并且结合自己的实践得出以下结论：</p>
+<p>Category: 字面意思是类别。</p>
+<ol>
+<li>主要用来扩展方法，并且适用于subclass;</li>
+<li><p>只能添加readonly的属性, 如果要添加readwrite属性必须在runtime过程中用objc_setAssociatedObject()&amp;objc_getAssociatedObject()方法来实现属性的get&amp;set方法;<br>Extension:字面意思是扩展。</p>
+</li>
+<li><p>同样可以扩展方法和属性，但局限于原始类；</p>
+</li>
+<li>声明的方法必须在@implemention中实现，不然编译器会报warning;<br>在extension中可以定义可写的属性，公有可读、私有可写的属性(Publicly-Readable, Privately-Writeable Properties)一般这样实现。<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/11/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9acategory-e4-b8-8eextension-e7-9a-84-e5-8c-ba-e5-88-ab/" data-id="ci93gwy4n000iti83hy4j9q60" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/07/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd/" class="article-date">
+  <time datetime="2015-03-07T02:12:24.000Z" itemprop="datePublished">2015-03-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS学习笔记/">iOS学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/07/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd/">iOS学习笔记：iOS多线程的3种方式之GCD</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
+<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。</p>
+<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<p>优点：</p>
+<ol>
+<li>使用block技术（闭包），使代码看上去十分简洁，使用简单（适合新手）；</li>
+<li><p>能自动分配到空闲的处理器内核中，最大限度发挥多核心CPU的性能；<br>缺点：</p>
+</li>
+<li><p>不能管理线程的生命周期，不能满足某些需求例如图片上传的取消（AFNetworking中就是用NSOperation实现的）。<br>总结：iOS的多线程的这3种方式会一直存在着来满足不同的用户开发需求，三者相辅相成。我们不能一味的说哪种多线程的好与不好，只要找到某个场景下最合适的方法就可以了。</p>
+</li>
+</ol>
+<p>具体的使用我这边就不多讲了，推荐别人写的文章好了：</p>
+<h1 id="iOS多线程编程之Grand_Central_Dispatch(GCD)介绍和使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8016129" target="_blank" rel="external">iOS多线程编程之Grand Central Dispatch(GCD)介绍和使用 </a></span></h1><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/07/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd/" data-id="ci93gwy4k000gti83pz6um7df" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsoperation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsoperation/" class="article-date">
+  <time datetime="2015-03-06T14:42:31.000Z" itemprop="datePublished">2015-03-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS学习笔记/">iOS学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsoperation/">iOS学习笔记：iOS多线程的3种方式之NSOperation</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
+<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSOperation的优缺点。</p>
+<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<p>优点：</p>
+<ol>
+<li>NSOperation不需要关心线程管理，数据同步的事情，可以把精力放在自己需要执行的操作上；</li>
+<li>NSOperation可以监控多线程的运行状态，随时可以结束任务；</li>
+<li><p>NSOperation支持KVO；<br>缺点：</p>
+</li>
+<li><p>比GCD更高级的抽象，造成了性能上的劣势；</p>
+</li>
+<li>对于新人来说，使用起来比GCD相对复杂；<br>具体的使用我这边就不多讲了，推荐别人写的文章好了：</li>
+</ol>
+<h1 id="iOS多线程编程之NSOperation和NSOperationQueue的使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8013316" target="_blank" rel="external">iOS多线程编程之NSOperation和NSOperationQueue的使用 </a></span></h1><p>&nbsp;</p>
+<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsoperation/" data-id="ci93gwy4h000eti83fhx08f4y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsthread" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsthread/" class="article-date">
+  <time datetime="2015-03-06T14:03:48.000Z" itemprop="datePublished">2015-03-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS学习笔记/">iOS学习笔记</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsthread/">iOS学习笔记：iOS多线程的3种方式之NSThread</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
+<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。</p>
+<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<p>优点：</p>
+<ol>
+<li>NSThread 是轻量级的（大家公认的，Apple最早的多线程技术）；</li>
+<li><p>可以管理生命周期，NSThread 是一个对象，必然可以通过代码来管理它的生命周期（ps: 其实很多人认为这是它的缺点，使用起来复杂了需求，但是如果你有相应的需求的时候你会发现这才是你要的最好的多线程方式，看问题是需要多面的，在某些场景下优点与缺点会互换）。<br>缺点：</p>
+</li>
+<li><p>NSThread需要程序员自己处理其生命周期，数据同步问题（数据锁等），势必会影响了开发效率（ps:我以上的结论是站在不同的角度去说）;</p>
+</li>
+<li>数据同步以及数据加锁这些使用会影响性能的开销。<br>具体的使用我这边就不多讲了，推荐别人写的文章好了：</li>
+</ol>
+<h1 id="iOS多线程编程之NSThread的使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8010231" target="_blank" rel="external"> iOS多线程编程之NSThread的使用</a></span></h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsthread/" data-id="ci93gwy4d000cti83l4672g0n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e6-bb-9a-e5-8a-a8-e7-9a-84-e6-95-b0-e5-ad-97-ef-bc-9aflickernumber" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/03/02/e6-bb-9a-e5-8a-a8-e7-9a-84-e6-95-b0-e5-ad-97-ef-bc-9aflickernumber/" class="article-date">
+  <time datetime="2015-03-02T14:50:32.000Z" itemprop="datePublished">2015-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS开发/">iOS开发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/02/e6-bb-9a-e5-8a-a8-e7-9a-84-e6-95-b0-e5-ad-97-ef-bc-9aflickernumber/">滚动的数字：FlickerNumber</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。然后就准备自己来实现该效果，在github的学习过程中看到很多大牛都是用Category来扩展实现某些功能，例如SDWebImage中的UIImageView的 Category,AFNetworking中的UIButton的Category等。</p>
+<h2 id="思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。">思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。</h2><p>新建UILabel的Category:’ UILable+FlickerNumber ’</p>
+<p>新建方法:</p>
+<p><pre class="lang:objc decode:true ">/**</pre></p>
+<ul>
+<li>flicker number only a number variable<br>*</li>
+<li>@param number flicker number<br>*/<ul>
+<li>(void)dd_setNumber:(NSNumber <em>)number;<br>/*</em></li>
+</ul>
+</li>
+<li>flicker number in duration<br>*</li>
+<li>@param number   flicker number</li>
+<li>@param duration duration time<br>*/<ul>
+<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration</span></span>;
+</code></pre>/**</li>
+</ul>
+</li>
+<li>flicker number with format<br>*</li>
+<li>@param number    flicker number</li>
+<li>@param formatStr format string<br>*/<ul>
+<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">format</span>:<span class="value">(NSString *)formatStr</span></span>;
+</code></pre>/**</li>
+</ul>
+</li>
+<li>flicker number with attributes<br>*</li>
+<li>@param number flicker number</li>
+<li>@param attrs  text attributes<br>*/<ul>
+<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">attributes</span>:<span class="value">(id)attrs</span></span>;
+</code></pre>/**</li>
+</ul>
+</li>
+<li>flicker number with format in duration<br>*</li>
+<li>@param number    flicker number</li>
+<li>@param duration  duration time</li>
+<li>@param formatStr format string<br>*/<ul>
+<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration
+  format:(NSString *)formatStr</span></span>;
+</code></pre>/**</li>
+</ul>
+</li>
+<li>flicker number with attribute in duration<br>*</li>
+<li>@param number   flicker number</li>
+<li>@param duration duration time</li>
+<li>@param attrs    text attributes<br>*/<ul>
+<li>(void)dd_setNumber:(NSNumber *)number<pre><code>  <span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration
+attributes:(id)attrs</span></span>;
+</code></pre>/**</li>
+</ul>
+</li>
+<li>flicker number method<br>*</li>
+<li>@param number   flicker number</li>
+<li>@param duration duration time</li>
+<li>@param format   format string</li>
+<li>@param attri    text attribute<br>*/<ul>
+<li>(void)dd_setNumber:(NSNumber *)number<pre><code>  <span class="attribute">duration</span>:(NSTimeInterval)duration
+    <span class="attribute">format</span>:(NSString *)formatStr
+<span class="attribute">attributes</span>:(id)attrs;
+</code></pre><br>这些方法满足了时长、格式化、NSMutableAttributeString的要求；</li>
+</ul>
+</li>
+</ul>
+<p>更多内容请看代码：</p>
+<p>代码获得：<a href="https://github.com/openboy2012/FlickerNumber" target="_blank" rel="external">https://github.com/openboy2012/FlickerNumber</a></p>
+<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"> CocoaPods方式：<br><pre class="lang:sh decode:true ">pod search ‘FlickerNumber’</pre><br>&nbsp;<br><br></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/03/02/e6-bb-9a-e5-8a-a8-e7-9a-84-e6-95-b0-e5-ad-97-ef-bc-9aflickernumber/" data-id="ci93gwy55000qti83kurngqv4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e5-ae-9e-e7-8e-b0ios-e7-9a-84-e7-80-91-e5-b8-83-e6-b5-81-ef-bc-9addcollectionviewflowlayout" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/25/e5-ae-9e-e7-8e-b0ios-e7-9a-84-e7-80-91-e5-b8-83-e6-b5-81-ef-bc-9addcollectionviewflowlayout/" class="article-date">
+  <time datetime="2015-02-25T14:01:32.000Z" itemprop="datePublished">2015-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS开发/">iOS开发</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/02/25/e5-ae-9e-e7-8e-b0ios-e7-9a-84-e7-80-91-e5-b8-83-e6-b5-81-ef-bc-9addcollectionviewflowlayout/">实现iOS的瀑布流：DDCollectionViewFlowLayout</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code> 前一段时间正在做iOS客户端的64位适配， 所以把项目设置成了最低系统要求为iOS6.0。空闲之余，准备把之前用UIScrollView实现的瀑布流用UICollectionView重新实现一下。于是乎，DDCollectionViewFlowLayout就这样诞生了。
+
+ 在学习UICollectionView的过程中，首先肯定是查阅苹果的官方文档 [<span class="link_label">UICollectionView</span>](<span class="link_url">https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/index.html#//apple_ref/swift/cl/UICollectionView</span>) ,了解基本信息以后得知实现瀑布流的方式必须使用[<span class="link_label">UICollectionViewLayout</span>](<span class="link_url">https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/index.html#//apple_ref/doc/c_ref/UICollectionViewLayout</span>) 继续参考苹果官方文档了解[<span class="link_label">UICollectionViewFlowLayout</span>](<span class="link_url">https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewFlowLayout_class/index.html#//apple_ref/occ/cl/UICollectionViewFlowLayout</span>) 必须实现的方法和生命周期 <span class="emphasis">_。_</span>
+
+了解过UICollectionViewFlowLayout的Protocol方法以后，就可以着手写自己的代码了。首先 DDCollectionViewFlowLayout 继承了UICollectionViewFlowLayout,只要重载
+</code></pre><p><pre class="lang:objc decode:true  ">- (void)prepareLayout;</pre></p>
+<ul>
+<li>(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect;</li>
+<li>(UICollectionViewLayoutAttributes <em>)layoutAttributesForItemAtIndexPath:(NSIndexPath </em>)indexPath;<br>等方法就可以实现瀑布流的效果。</li>
+</ul>
+<h1 id="怎么获得代码？">怎么获得代码？</h1><div style="text-align: justify;">可以通过以下链接在github中获取：</div><br><div style="text-align: justify;"><a href="https://github.com/openboy2012/DDCollectionViewFlowLayout" target="_blank" rel="external">https://github.com/openboy2012/DDCollectionViewFlowLayout</a></div><br><div style="text-align: justify;">当然你也可以在CocoaPods 中搜索:</div><br><pre class="lang:sh decode:true">pod search ‘DDCollectionViewFlowLyaout’</pre><br><div style="text-align: justify;">效果图：</div><br><div style="text-align: justify;"> <img src="http://ipa-download.qiniudn.com/loadingmore.gif" alt=""><img src="http://ipa-download.qiniudn.com/waterfall.gif" alt=""></div>
+
+<h1 id="怎么使用？">怎么使用？</h1><div style="text-align: justify;">        如果你只想简单应用，导入DDCollectionViewFlowLayout以后实现以下代码：</div><br><div style="text-align: justify;"><br><pre class="lang:objc decode:true ">DDCollectionViewFlowLayout <em>layout = [[DDCollectionViewFlowLayout alloc] init];<br>layout.delegate = self;<br>[self.collectionView setLayout:layout];</em></pre><br>然后要实现UICollectionViewDataSource 方法中的必需方法：<br><pre class="lang:default decode:true">- (NSInteger)collectionView:(UICollectionView )collectionView numberOfItemsInSection:(NSInteger)section;// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:<br>- (UICollectionViewCell <em>)collectionView:(UICollectionView </em>)collectionView cellForItemAtIndexPath:(NSIndexPath <em>)indexPath;</em></pre><br>我只在DDCollectionViewFlowLayout中新增了一个必需实现的delegate方法：<br><pre class="lang:objc decode:true">- (NSInteger)collectionView:(UICollectionView )collectionView layout:(DDCollectionViewFlowLayout <em>)layout numberOfColumnsInSection:(NSInteger)section</em></pre><br>因为DDCollectionViewFlowLayout 继承了UICollectionViewFlowLayout，所以你可以选择性得实现UICollectionViewFlowLayoutDelegate中的所有非必需delegate方法, 例如：<br><br></div><br><div><br><pre class="lang:objc decode:true">- (CGSize)collectionView:(UICollectionView )collectionView layout:(UICollectionViewLayout<em>)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath </em>)indexPath;<br><br>- (UIEdgeInsets)collectionView:(UICollectionView <em>)collectionView layout:(UICollectionViewLayout</em>)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;<br><br>- (CGFloat)collectionView:(UICollectionView <em>)collectionView layout:(UICollectionViewLayout</em>)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;<br><br>- (CGFloat)collectionView:(UICollectionView <em>)collectionView layout:(UICollectionViewLayout</em>)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;<br><br>- (CGSize)collectionView:(UICollectionView <em>)collectionView layout:(UICollectionViewLayout</em>)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section;<br><br>- (CGSize)collectionView:(UICollectionView <em>)collectionView layout:(UICollectionViewLayout</em>)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section;</pre><br></div><br><div style="text-align: justify;">        这些方法都适配了DDCollectionViewFlowLayout,让你有亲切的感觉。</div><br><div style="text-align: justify;"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd" style="text-align: justify;"> 如有不懂可以参考Demo <a href="https://github.com/openboy2012/DDCollectionViewFlowLayout" target="_blank" rel="external">https://github.com/openboy2012/DDCollectionViewFlowLayout</a></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/02/25/e5-ae-9e-e7-8e-b0ios-e7-9a-84-e7-80-91-e5-b8-83-e6-b5-81-ef-bc-9addcollectionviewflowlayout/" data-id="ci93gwy58000sti83co90rwu6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -143,11 +597,22 @@
 
   
   
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
+  
 </section>
         
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DeJohn-Style/">DeJohn Style</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS学习笔记/">iOS学习笔记</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS开发/">iOS开发</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
   
     
   
@@ -157,7 +622,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -174,6 +639,18 @@
         
           <li>
             <a href="/2015/04/29/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/04/15/e8-87-aa-e5-8a-a8-e8-8d-89-e7-a8-bf/">自动草稿</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/17/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3/">iOS学习笔记：NSRunLoop的理解</a>
+          </li>
+        
+          <li>
+            <a href="/2015/03/11/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9acategory-e4-b8-8eextension-e7-9a-84-e5-8c-ba-e5-88-ab/">iOS学习笔记：Category与Extension的区别</a>
           </li>
         
       </ul>
