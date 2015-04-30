@@ -4,20 +4,19 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>iOS学习笔记：NSRunLoop的理解 | DeJohn&#39;s Blog</title>
+    <title>你好，访客 | DeJohn&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="DeJohn Dong">
     
-    <meta name="description" content="官方文档的定义是NSRunLoop是用来管理线程中输入的资源，它是一个循环、可以处理事件。
-每个创建的多线程都会自己创建一个NSRunLoop。
-主线程中的NSRunLoop是默认开启的但是处于一种“等待”的状态（而不像一些命令行程序一样运行一次就结束了），当有信息输入时NSRunLoop才会发生响">
+    <meta name="description" content="本人2011年开始从事iOS开发，目前混迹于嘉兴，一个小巧的城市，在这里你可以跟我交流iOS方面的所有技术。
+我的github地址：http://github.com/openboy2012.">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="idreajay" />
-    <meta name="twitter:title" content="iOS学习笔记：NSRunLoop的理解 | DeJohn&#39;s Blog" />
+    <meta name="twitter:title" content="你好，访客 | DeJohn&#39;s Blog" />
       
     
     
@@ -74,7 +73,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/17/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3/" title="iOS学习笔记：NSRunLoop的理解" itemprop="url">iOS学习笔记：NSRunLoop的理解</a>
+      <a href="/2015/02/13/hello-world/" title="你好，访客" itemprop="url">你好，访客</a>
   </h1>
   <!-- 显示作者
   <p class="article-author">By
@@ -83,7 +82,7 @@
     </p>
   -->  
   <p class="article-time">
-    <time datetime="2015-03-17T07:00:49.000Z" itemprop="datePublished">2015-03-17</time>
+    <time datetime="2015-02-13T00:52:36.000Z" itemprop="datePublished">2015-02-13</time>
     更新日期:<time datetime="2015-04-30T01:00:55.000Z" itemprop="dateModified">2015-04-30</time>
     
   </p>
@@ -94,20 +93,12 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#-_(BOOL)runMode:(NSString_)mode_beforeDate:(NSDate_)limitDate_方法_详解"><span class="toc-number">1.</span> <span class="toc-text"> - (BOOL)runMode:(NSString )mode beforeDate:(NSDate )limitDate 方法 详解 </span></a></li></ol>
+		
 		</div>
 		
-		<p>官方文档的定义是<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSRunLoop_Class/index.html#//apple_ref/doc/uid/TP40003725" target="_blank" rel="external">NSRunLoop</a>是用来管理线程中输入的资源，它是一个循环、可以处理事件。</p>
-<p>每个创建的多线程都会自己创建一个NSRunLoop。</p>
-<p>主线程中的NSRunLoop是默认开启的但是处于一种“等待”的状态（而不像一些命令行程序一样运行一次就结束了），当有信息输入时NSRunLoop才会发生响应，所以主线程不会被卡线程。</p>
-<p>在多线程中使用就必须手动管理了NSRunLoop了。</p>
-<p>下来是Run Loop的使用场合：<br>1. 使用port或是自定义的input source来和其他线程进行通信&lt;AFNetworking中有使用&gt;<br>2. 在线程（非主线程）中使用timer<br>3. 使用 performSelector…系列,</p>
-<p><pre class="lang:objc decode:true">- (void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay inModes:(NSArray *)modes;</pre></p>
-<ul>
-<li>(void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay;<br>4. 使用线程执行周期性工作<br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd">引用别人的一篇文章觉得不错：</div></li>
-</ul>
-<h1 id="-_(BOOL)runMode:(NSString_)mode_beforeDate:(NSDate_)limitDate_方法_详解"><span class="link_title"><a href="http://blog.csdn.net/wjsxiaoweige/article/details/38318733" target="_blank" rel="external"> - (BOOL)runMode:(NSString <em>)mode beforeDate:(NSDate </em>)limitDate 方法 详解 </a></span></h1><p></p>
-<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>  
+		<p>本人2011年开始从事iOS开发，目前混迹于嘉兴，一个小巧的城市，在这里你可以跟我交流iOS方面的所有技术。</p>
+<p>我的github地址：<a href="http://github.com/openboy2012" target="_blank" rel="external">http://github.com/openboy2012</a>.</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-share" id="share">
@@ -136,7 +127,7 @@ var jiathis_config = {data_track_clickback:'true'};
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/iOS学习笔记/">iOS学习笔记</a>
+  <a class="article-category-link" href="/categories/DeJohn-Style/">DeJohn Style</a>
 </div>
 
 
@@ -147,28 +138,20 @@ var jiathis_config = {data_track_clickback:'true'};
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/04/15/e8-87-aa-e5-8a-a8-e8-8d-89-e7-a8-bf/" title="自动草稿">
+ <a href="/2015/02/25/e5-ae-9e-e7-8e-b0ios-e7-9a-84-e7-80-91-e5-b8-83-e6-b5-81-ef-bc-9addcollectionviewflowlayout/" title="实现iOS的瀑布流：DDCollectionViewFlowLayout">
   <strong>上一篇:</strong><br/>
   <span>
-  自动草稿</span>
+  实现iOS的瀑布流：DDCollectionViewFlowLayout</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/2015/03/11/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9acategory-e4-b8-8eextension-e7-9a-84-e5-8c-ba-e5-88-ab/"  title="iOS学习笔记：Category与Extension的区别">
- <strong>下一篇:</strong><br/> 
- <span>iOS学习笔记：Category与Extension的区别
-</span>
-</a>
-</div>
 
 </nav>
 
 	<!-- 多说-->
 
 <section class="comment">
-<div class="ds-thread" data-thread-key="post-iOS学习笔记：NSRunLoop的理解" data-title="iOS学习笔记：NSRunLoop的理解" data-url="http://yoursite.com/2015/03/17/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3/"></div>
+<div class="ds-thread" data-thread-key="post-你好，访客" data-title="你好，访客" data-url="http://yoursite.com/2015/02/13/hello-world/"></div>
 </section>
 <!-- disqus-->
 
