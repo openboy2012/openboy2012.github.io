@@ -5,18 +5,18 @@
   
   <title>滚动的数字：FlickerNumber | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。然后就准备自己来实现该效果，在github的学习过程中看到很多大牛都是用Category来扩展实现某些功能，例如SDWebImage中的UIImageView的 Category,AFNetworking中的UIButton的Category等。
-思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数">
+  <meta name="description" content="起因最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  
+于是准备自己来实现该效果，在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。于是我也使用Category的方法来实现该功能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="滚动的数字：FlickerNumber">
 <meta property="og:url" content="http://yoursite.com/2015/03/02/e6-bb-9a-e5-8a-a8-e7-9a-84-e6-95-b0-e5-ad-97-ef-bc-9aflickernumber/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
-<meta property="og:description" content="最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。然后就准备自己来实现该效果，在github的学习过程中看到很多大牛都是用Category来扩展实现某些功能，例如SDWebImage中的UIImageView的 Category,AFNetworking中的UIButton的Category等。
-思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数">
+<meta property="og:description" content="起因最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  
+于是准备自己来实现该效果，在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。于是我也使用Category的方法来实现该功能">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="滚动的数字：FlickerNumber">
-<meta name="twitter:description" content="最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。然后就准备自己来实现该效果，在github的学习过程中看到很多大牛都是用Category来扩展实现某些功能，例如SDWebImage中的UIImageView的 Category,AFNetworking中的UIButton的Category等。
-思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数">
+<meta name="twitter:description" content="起因最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  
+于是准备自己来实现该效果，在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。于是我也使用Category的方法来实现该功能">
   
     <link rel="alternative" href="/atom.xml" title="DeJohn&#39;s Blog" type="application/atom+xml">
   
@@ -233,70 +233,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。然后就准备自己来实现该效果，在github的学习过程中看到很多大牛都是用Category来扩展实现某些功能，例如SDWebImage中的UIImageView的 Category,AFNetworking中的UIButton的Category等。</p>
-<h2 id="思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。">思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。</h2><p>新建UILabel的Category:’ UILable+FlickerNumber ’</p>
-<p>新建方法:</p>
-<p><pre class="lang:objc decode:true ">/**</pre></p>
-<ul>
-<li>flicker number only a number variable<br>*</li>
-<li>@param number flicker number<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber <em>)number;<br>/*</em></li>
-</ul>
-</li>
-<li>flicker number in duration<br>*</li>
-<li>@param number   flicker number</li>
-<li>@param duration duration time<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with format<br>*</li>
-<li>@param number    flicker number</li>
-<li>@param formatStr format string<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">format</span>:<span class="value">(NSString *)formatStr</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with attributes<br>*</li>
-<li>@param number flicker number</li>
-<li>@param attrs  text attributes<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">attributes</span>:<span class="value">(id)attrs</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with format in duration<br>*</li>
-<li>@param number    flicker number</li>
-<li>@param duration  duration time</li>
-<li>@param formatStr format string<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration
-  format:(NSString *)formatStr</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with attribute in duration<br>*</li>
-<li>@param number   flicker number</li>
-<li>@param duration duration time</li>
-<li>@param attrs    text attributes<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code>  <span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration
-attributes:(id)attrs</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number method<br>*</li>
-<li>@param number   flicker number</li>
-<li>@param duration duration time</li>
-<li>@param format   format string</li>
-<li>@param attri    text attribute<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code>  <span class="attribute">duration</span>:(NSTimeInterval)duration
-    <span class="attribute">format</span>:(NSString *)formatStr
-<span class="attribute">attributes</span>:(id)attrs;
-</code></pre><br>这些方法满足了时长、格式化、NSMutableAttributeString的要求；</li>
-</ul>
-</li>
-</ul>
-<p>更多内容请看代码：</p>
-<p>代码获得：<a href="https://github.com/openboy2012/FlickerNumber" target="_blank" rel="external">https://github.com/openboy2012/FlickerNumber</a></p>
-<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"> CocoaPods方式：<br><pre class="lang:sh decode:true ">pod search ‘FlickerNumber’</pre><br>&nbsp;<br><br></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+        <h2 id="起因">起因</h2><p>最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  </p>
+<p>于是准备自己来实现该效果，在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，<br>例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。<br>于是我也使用Category的方法来实现该功能。  </p>
+<h2 id="思路">思路</h2><p>数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。  </p>
+<h2 id="实现">实现</h2><p>新建UILabel的Category: “UILable+FlickerNumber“  </p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">新建方法:</span><br><span class="line"> <span class="keyword">*</span>  flicker number only a number variable</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number flicker number</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number in duration</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number   flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration duration time</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">            duration:(NSTimeInterval)duration;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with format</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number    flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param formatStr format string</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">              format:(NSString <span class="keyword">*</span>)formatStr;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with attributes</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param attrs  text attributes</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">          attributes:(id)attrs;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with format in duration</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number    flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration  duration time</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param formatStr format string</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">            duration:(NSTimeInterval)duration</span><br><span class="line">              format:(NSString <span class="keyword">*</span>)formatStr;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with attribute in duration</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number   flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration duration time</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param attrs    text attributes</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">            duration:(NSTimeInterval)duration</span><br><span class="line">          attributes:(id)attrs;  </span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number method</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number   flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration duration time</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param format   format string</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param attri    text attribute</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number  </span><br><span class="line">            duration:(NSTimeInterval)duration  </span><br><span class="line">              format:(NSString <span class="keyword">*</span>)formatStr  </span><br><span class="line">          attributes:(id)attrs;</span><br></pre></td></tr></table></figure>
+<p>这些方法满足了时长、格式化、NSMutableAttributeString的要求；</p>
+<h2 id="更多">更多</h2><p>代码获得：<br><a href="https://github.com/openboy2012/FlickerNumber" target="_blank" rel="external">https://github.com/openboy2012/FlickerNumber</a><br>CocoaPods方式：<br><code>pod search &#39;FlickerNumber’</code></p>
+
       
     </div>
     

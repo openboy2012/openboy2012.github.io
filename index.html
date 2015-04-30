@@ -225,13 +225,17 @@
 <p>每个创建的多线程都会自己创建一个NSRunLoop。</p>
 <p>主线程中的NSRunLoop是默认开启的但是处于一种“等待”的状态（而不像一些命令行程序一样运行一次就结束了），当有信息输入时NSRunLoop才会发生响应，所以主线程不会被卡线程。</p>
 <p>在多线程中使用就必须手动管理了NSRunLoop了。</p>
-<p>下来是Run Loop的使用场合：<br>1. 使用port或是自定义的input source来和其他线程进行通信&lt;AFNetworking中有使用&gt;<br>2. 在线程（非主线程）中使用timer<br>3. 使用 performSelector…系列,</p>
-<p><pre class="lang:objc decode:true">- (void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay inModes:(NSArray *)modes;</pre></p>
+<p>下来是Run Loop的使用场合：</p>
 <ul>
-<li>(void)performSelector:(SEL)aSelector withObject:(id)anArgument afterDelay:(NSTimeInterval)delay;<br>4. 使用线程执行周期性工作<br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd">引用别人的一篇文章觉得不错：</div></li>
+<li>使用port或是自定义的input source来和其他线程进行通信<afnetworking中有使用>;</afnetworking中有使用></li>
+<li>在线程（非主线程）中使用timer</li>
+<li><p>使用 performSelector…系列</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>performSelector:<span class="params">(<span class="variable">SEL</span>)</span>aSelector withObject:<span class="params">(id)</span>anArgument afterDelay:<span class="params">(<span class="variable">NSTimeInterval</span>)</span>delay inModes:<span class="params">(<span class="variable">NSArray</span> *)</span>modes;  </span><br><span class="line">- <span class="params">(void)</span>performSelector:<span class="params">(<span class="variable">SEL</span>)</span>aSelector withObject:<span class="params">(id)</span>anArgument afterDelay:<span class="params">(<span class="variable">NSTimeInterval</span>)</span>delay;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用线程执行周期性工作</p>
+<h2 id="引用别人的一篇文章觉得不错：">引用别人的一篇文章觉得不错：</h2></li>
 </ul>
-<h1 id="-_(BOOL)runMode:(NSString_)mode_beforeDate:(NSDate_)limitDate_方法_详解"><span class="link_title"><a href="http://blog.csdn.net/wjsxiaoweige/article/details/38318733" target="_blank" rel="external"> - (BOOL)runMode:(NSString <em>)mode beforeDate:(NSDate </em>)limitDate 方法 详解 </a></span></h1><p></p>
-<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+<h3 id="-_(BOOL)runMode:(NSString_)mode_beforeDate:(NSDate_)limitDate_方法_详解"><a href="http://blog.csdn.net/wjsxiaoweige/article/details/38318733" target="_blank" rel="external"> - (BOOL)runMode:(NSString <em>)mode beforeDate:(NSDate </em>)limitDate 方法 详解 </a></h3>
       
     </div>
     
@@ -286,14 +290,14 @@
         <p>很早就知道了Category和Extension了，虽然平常使用的频率还是可以的，但真正的区别也不是很清楚；</p>
 <p>于是乎查阅了相关资料并且结合自己的实践得出以下结论：</p>
 <p>Category: 字面意思是类别。</p>
-<ol>
+<ul>
 <li>主要用来扩展方法，并且适用于subclass;</li>
-<li><p>只能添加readonly的属性, 如果要添加readwrite属性必须在runtime过程中用objc_setAssociatedObject()&amp;objc_getAssociatedObject()方法来实现属性的get&amp;set方法;<br>Extension:字面意思是扩展。</p>
+<li><p>只能添加readonly的属性, 如果要添加readwrite属性必须在runtime过程中用objc_setAssociatedObject()和objc_getAssociatedObject()方法来实现属性的get与set方法;<br>Extension:字面意思是扩展。</p>
 </li>
 <li><p>同样可以扩展方法和属性，但局限于原始类；</p>
 </li>
-<li>声明的方法必须在@implemention中实现，不然编译器会报warning;<br>在extension中可以定义可写的属性，公有可读、私有可写的属性(Publicly-Readable, Privately-Writeable Properties)一般这样实现。<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div></li>
-</ol>
+<li>声明的方法必须在@implemention中实现，不然编译器会报warning;<br>在extension中可以定义可写的属性，公有可读、私有可写的属性(Publicly-Readable, Privately-Writeable Properties)一般这样实现。</li>
+</ul>
 
       
     </div>
@@ -347,8 +351,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
-<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。</p>
-<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  </p>
+<h2 id="我的见解">我的见解</h2><p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
 <p>优点：</p>
 <ol>
 <li>使用block技术（闭包），使代码看上去十分简洁，使用简单（适合新手）；</li>
@@ -358,7 +362,7 @@
 </li>
 </ol>
 <p>具体的使用我这边就不多讲了，推荐别人写的文章好了：</p>
-<h1 id="iOS多线程编程之Grand_Central_Dispatch(GCD)介绍和使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8016129" target="_blank" rel="external">iOS多线程编程之Grand Central Dispatch(GCD)介绍和使用 </a></span></h1><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+<h3 id="iOS多线程编程之Grand_Central_Dispatch(GCD)介绍和使用"><a href="http://blog.csdn.net/totogo2010/article/details/8016129" target="_blank" rel="external">iOS多线程编程之Grand Central Dispatch(GCD)介绍和使用 </a></h3>
       
     </div>
     
@@ -411,20 +415,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
-<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSOperation的优缺点。</p>
-<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSOperation的优缺点。  </p>
+<h2 id="我的见解">我的见解</h2><p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
 <p>优点：</p>
-<ol>
+<ul>
 <li>NSOperation不需要关心线程管理，数据同步的事情，可以把精力放在自己需要执行的操作上；</li>
 <li>NSOperation可以监控多线程的运行状态，随时可以结束任务；</li>
 <li><p>NSOperation支持KVO；<br>缺点：</p>
 </li>
 <li><p>比GCD更高级的抽象，造成了性能上的劣势；</p>
 </li>
-<li>对于新人来说，使用起来比GCD相对复杂；<br>具体的使用我这边就不多讲了，推荐别人写的文章好了：</li>
-</ol>
-<h1 id="iOS多线程编程之NSOperation和NSOperationQueue的使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8013316" target="_blank" rel="external">iOS多线程编程之NSOperation和NSOperationQueue的使用 </a></span></h1><p>&nbsp;</p>
-<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+<li>对于新人来说，使用起来比GCD相对复杂；</li>
+</ul>
+<h2 id="具体的使用我这边就不多讲了，推荐别人写的文章好了:">具体的使用我这边就不多讲了，推荐别人写的文章好了:</h2><h3 id="iOS多线程编程之NSOperation和NSOperationQueue的使用"><a href="http://blog.csdn.net/totogo2010/article/details/8013316" target="_blank" rel="external">iOS多线程编程之NSOperation和NSOperationQueue的使用 </a></h3>
       
     </div>
     
@@ -477,18 +480,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
-<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。</p>
-<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。  </p>
+<h2 id="我的见解">我的见解</h2><p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
 <p>优点：</p>
-<ol>
-<li>NSThread 是轻量级的（大家公认的，Apple最早的多线程技术）；</li>
-<li><p>可以管理生命周期，NSThread 是一个对象，必然可以通过代码来管理它的生命周期（ps: 其实很多人认为这是它的缺点，使用起来复杂了需求，但是如果你有相应的需求的时候你会发现这才是你要的最好的多线程方式，看问题是需要多面的，在某些场景下优点与缺点会互换）。<br>缺点：</p>
-</li>
-<li><p>NSThread需要程序员自己处理其生命周期，数据同步问题（数据锁等），势必会影响了开发效率（ps:我以上的结论是站在不同的角度去说）;</p>
-</li>
-<li>数据同步以及数据加锁这些使用会影响性能的开销。<br>具体的使用我这边就不多讲了，推荐别人写的文章好了：</li>
-</ol>
-<h1 id="iOS多线程编程之NSThread的使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8010231" target="_blank" rel="external"> iOS多线程编程之NSThread的使用</a></span></h1>
+<ul>
+<li>NSThread 是轻量级的（大家公认的，Apple最早的多线程技术）；  </li>
+<li>可以管理生命周期，NSThread 是一个对象，必然可以通过代码来管理它的生命周期（ps: 其实很多人认为这是它的缺点，使用起来复杂了需求，但是如果你有相应的需求的时候你会发现这才是你要的最好的多线程方式，看问题是需要多面的，在某些场景下优点与缺点会互换）。  </li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>NSThread需要程序员自己处理其生命周期，数据同步问题（数据锁等），势必会影响了开发效率（ps:我以上的结论是站在不同的角度去说）;</li>
+<li>线程同步以及数据加锁这些使用会影响性能的开销。  </li>
+</ul>
+<h2 id="具体的使用我这边就不多讲了，推荐别人写的文章好了：">具体的使用我这边就不多讲了，推荐别人写的文章好了：</h2><h3 id="iOS多线程编程之NSThread的使用"><a href="http://blog.csdn.net/totogo2010/article/details/8010231" target="_blank" rel="external"> iOS多线程编程之NSThread的使用</a></h3>
       
     </div>
     
@@ -540,70 +544,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。然后就准备自己来实现该效果，在github的学习过程中看到很多大牛都是用Category来扩展实现某些功能，例如SDWebImage中的UIImageView的 Category,AFNetworking中的UIButton的Category等。</p>
-<h2 id="思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。">思路：数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。</h2><p>新建UILabel的Category:’ UILable+FlickerNumber ’</p>
-<p>新建方法:</p>
-<p><pre class="lang:objc decode:true ">/**</pre></p>
-<ul>
-<li>flicker number only a number variable<br>*</li>
-<li>@param number flicker number<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber <em>)number;<br>/*</em></li>
-</ul>
-</li>
-<li>flicker number in duration<br>*</li>
-<li>@param number   flicker number</li>
-<li>@param duration duration time<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with format<br>*</li>
-<li>@param number    flicker number</li>
-<li>@param formatStr format string<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">format</span>:<span class="value">(NSString *)formatStr</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with attributes<br>*</li>
-<li>@param number flicker number</li>
-<li>@param attrs  text attributes<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">attributes</span>:<span class="value">(id)attrs</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with format in duration<br>*</li>
-<li>@param number    flicker number</li>
-<li>@param duration  duration time</li>
-<li>@param formatStr format string<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code><span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration
-  format:(NSString *)formatStr</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number with attribute in duration<br>*</li>
-<li>@param number   flicker number</li>
-<li>@param duration duration time</li>
-<li>@param attrs    text attributes<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code>  <span class="rule"><span class="attribute">duration</span>:<span class="value">(NSTimeInterval)duration
-attributes:(id)attrs</span></span>;
-</code></pre>/**</li>
-</ul>
-</li>
-<li>flicker number method<br>*</li>
-<li>@param number   flicker number</li>
-<li>@param duration duration time</li>
-<li>@param format   format string</li>
-<li>@param attri    text attribute<br>*/<ul>
-<li>(void)dd_setNumber:(NSNumber *)number<pre><code>  <span class="attribute">duration</span>:(NSTimeInterval)duration
-    <span class="attribute">format</span>:(NSString *)formatStr
-<span class="attribute">attributes</span>:(id)attrs;
-</code></pre><br>这些方法满足了时长、格式化、NSMutableAttributeString的要求；</li>
-</ul>
-</li>
-</ul>
-<p>更多内容请看代码：</p>
-<p>代码获得：<a href="https://github.com/openboy2012/FlickerNumber" target="_blank" rel="external">https://github.com/openboy2012/FlickerNumber</a></p>
-<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"> CocoaPods方式：<br><pre class="lang:sh decode:true ">pod search ‘FlickerNumber’</pre><br>&nbsp;<br><br></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+        <h2 id="起因">起因</h2><p>最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  </p>
+<p>于是准备自己来实现该效果，在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，<br>例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。<br>于是我也使用Category的方法来实现该功能。  </p>
+<h2 id="思路">思路</h2><p>数字从某个起点数字跳转到目标数字，定时的去刷新当前累加的数字，达到一个数字变化的效果。  </p>
+<h2 id="实现">实现</h2><p>新建UILabel的Category: “UILable+FlickerNumber“  </p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">新建方法:</span><br><span class="line"> <span class="keyword">*</span>  flicker number only a number variable</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number flicker number</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number in duration</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number   flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration duration time</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">            duration:(NSTimeInterval)duration;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with format</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number    flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param formatStr format string</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">              format:(NSString <span class="keyword">*</span>)formatStr;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with attributes</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param attrs  text attributes</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">          attributes:(id)attrs;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with format in duration</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number    flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration  duration time</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param formatStr format string</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">            duration:(NSTimeInterval)duration</span><br><span class="line">              format:(NSString <span class="keyword">*</span>)formatStr;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number with attribute in duration</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number   flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration duration time</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param attrs    text attributes</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number</span><br><span class="line">            duration:(NSTimeInterval)duration</span><br><span class="line">          attributes:(id)attrs;  </span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  flicker number method</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param number   flicker number</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param duration duration time</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param format   format string</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param attri    text attribute</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)dd_setNumber:(NSNumber <span class="keyword">*</span>)number  </span><br><span class="line">            duration:(NSTimeInterval)duration  </span><br><span class="line">              format:(NSString <span class="keyword">*</span>)formatStr  </span><br><span class="line">          attributes:(id)attrs;</span><br></pre></td></tr></table></figure>
+<p>这些方法满足了时长、格式化、NSMutableAttributeString的要求；</p>
+<h2 id="更多">更多</h2><p>代码获得：<br><a href="https://github.com/openboy2012/FlickerNumber" target="_blank" rel="external">https://github.com/openboy2012/FlickerNumber</a><br>CocoaPods方式：<br><code>pod search &#39;FlickerNumber’</code></p>
+
       
     </div>
     
