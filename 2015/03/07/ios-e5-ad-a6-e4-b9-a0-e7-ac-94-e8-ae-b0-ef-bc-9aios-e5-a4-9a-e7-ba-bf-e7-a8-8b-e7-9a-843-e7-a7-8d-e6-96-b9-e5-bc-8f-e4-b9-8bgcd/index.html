@@ -6,29 +6,29 @@
   <title>iOS学习笔记：iOS多线程的3种方式之GCD | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。
-通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  
+我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
 优点：
 
-使用block技术（闭包），使代码看上">
+使用block技术（闭包）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS学习笔记：iOS多线程的3种方式之GCD">
 <meta property="og:url" content="http://yoursite.com/2015/03/07/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
 <meta property="og:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。
-通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  
+我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
 优点：
 
-使用block技术（闭包），使代码看上">
+使用block技术（闭包）">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS学习笔记：iOS多线程的3种方式之GCD">
 <meta name="twitter:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。
-通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  
+我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
 优点：
 
-使用block技术（闭包），使代码看上">
+使用block技术（闭包）">
   
     <link rel="alternative" href="/atom.xml" title="DeJohn&#39;s Blog" type="application/atom+xml">
   
@@ -246,8 +246,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
-<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。</p>
-<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  </p>
+<h2 id="我的见解">我的见解</h2><p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
 <p>优点：</p>
 <ol>
 <li>使用block技术（闭包），使代码看上去十分简洁，使用简单（适合新手）；</li>
@@ -257,7 +257,7 @@
 </li>
 </ol>
 <p>具体的使用我这边就不多讲了，推荐别人写的文章好了：</p>
-<h1 id="iOS多线程编程之Grand_Central_Dispatch(GCD)介绍和使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8016129" target="_blank" rel="external">iOS多线程编程之Grand Central Dispatch(GCD)介绍和使用 </a></span></h1><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+<h3 id="iOS多线程编程之Grand_Central_Dispatch(GCD)介绍和使用"><a href="http://blog.csdn.net/totogo2010/article/details/8016129" target="_blank" rel="external">iOS多线程编程之Grand Central Dispatch(GCD)介绍和使用 </a></h3>
       
     </div>
     

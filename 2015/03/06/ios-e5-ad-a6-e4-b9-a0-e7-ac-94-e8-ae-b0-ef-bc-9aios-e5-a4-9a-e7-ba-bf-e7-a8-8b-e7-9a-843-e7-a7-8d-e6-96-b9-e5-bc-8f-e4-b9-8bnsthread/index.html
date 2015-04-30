@@ -6,29 +6,29 @@
   <title>iOS学习笔记：iOS多线程的3种方式之NSThread | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。
-通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。  
+我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
 优点：
 
-NSThread 是轻量级的">
+NSThread">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS学习笔记：iOS多线程的3种方式之NSThread">
 <meta property="og:url" content="http://yoursite.com/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsthread/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
 <meta property="og:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。
-通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。  
+我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
 优点：
 
-NSThread 是轻量级的">
+NSThread">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS学习笔记：iOS多线程的3种方式之NSThread">
 <meta name="twitter:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。
-通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。  
+我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
 优点：
 
-NSThread 是轻量级的">
+NSThread">
   
     <link rel="alternative" href="/atom.xml" title="DeJohn&#39;s Blog" type="application/atom+xml">
   
@@ -246,18 +246,19 @@ NSThread 是轻量级的">
     <div class="article-entry" itemprop="articleBody">
       
         <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
-<p>为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。</p>
-<p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
+<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。  </p>
+<h2 id="我的见解">我的见解</h2><p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
 <p>优点：</p>
-<ol>
-<li>NSThread 是轻量级的（大家公认的，Apple最早的多线程技术）；</li>
-<li><p>可以管理生命周期，NSThread 是一个对象，必然可以通过代码来管理它的生命周期（ps: 其实很多人认为这是它的缺点，使用起来复杂了需求，但是如果你有相应的需求的时候你会发现这才是你要的最好的多线程方式，看问题是需要多面的，在某些场景下优点与缺点会互换）。<br>缺点：</p>
-</li>
-<li><p>NSThread需要程序员自己处理其生命周期，数据同步问题（数据锁等），势必会影响了开发效率（ps:我以上的结论是站在不同的角度去说）;</p>
-</li>
-<li>数据同步以及数据加锁这些使用会影响性能的开销。<br>具体的使用我这边就不多讲了，推荐别人写的文章好了：</li>
-</ol>
-<h1 id="iOS多线程编程之NSThread的使用"><span class="link_title"><a href="http://blog.csdn.net/totogo2010/article/details/8010231" target="_blank" rel="external"> iOS多线程编程之NSThread的使用</a></span></h1>
+<ul>
+<li>NSThread 是轻量级的（大家公认的，Apple最早的多线程技术）；  </li>
+<li>可以管理生命周期，NSThread 是一个对象，必然可以通过代码来管理它的生命周期（ps: 其实很多人认为这是它的缺点，使用起来复杂了需求，但是如果你有相应的需求的时候你会发现这才是你要的最好的多线程方式，看问题是需要多面的，在某些场景下优点与缺点会互换）。  </li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>NSThread需要程序员自己处理其生命周期，数据同步问题（数据锁等），势必会影响了开发效率（ps:我以上的结论是站在不同的角度去说）;</li>
+<li>线程同步以及数据加锁这些使用会影响性能的开销。  </li>
+</ul>
+<h2 id="具体的使用我这边就不多讲了，推荐别人写的文章好了：">具体的使用我这边就不多讲了，推荐别人写的文章好了：</h2><h3 id="iOS多线程编程之NSThread的使用"><a href="http://blog.csdn.net/totogo2010/article/details/8010231" target="_blank" rel="external"> iOS多线程编程之NSThread的使用</a></h3>
       
     </div>
     
