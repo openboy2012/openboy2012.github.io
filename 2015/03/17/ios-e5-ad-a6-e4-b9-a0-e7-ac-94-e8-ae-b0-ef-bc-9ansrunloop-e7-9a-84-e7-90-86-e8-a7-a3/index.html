@@ -118,7 +118,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						
+						<a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -205,11 +205,11 @@
       
       <div class="article-info article-info-post">
         
-        
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/iOS学习笔记/">iOS学习笔记</a>
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS学习笔记/">iOS学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS消息循环/">iOS消息循环</a></li></ul>
 	</div>
 
+        
 
         <div class="clearfix"></div>
       </div>
@@ -224,7 +224,7 @@
 <p>下来是Run Loop的使用场合：</p>
 <ul>
 <li>使用port或是自定义的input source来和其他线程进行通信<afnetworking中有使用>;</afnetworking中有使用></li>
-<li>在线程（非主线程）中使用timer</li>
+<li>在线程（非主线程）中使用NSTimer</li>
 <li><p>使用 performSelector…系列</p>
 <figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>performSelector:<span class="params">(<span class="variable">SEL</span>)</span>aSelector withObject:<span class="params">(id)</span>anArgument afterDelay:<span class="params">(<span class="variable">NSTimeInterval</span>)</span>delay inModes:<span class="params">(<span class="variable">NSArray</span> *)</span>modes;  </span><br><span class="line">- <span class="params">(void)</span>performSelector:<span class="params">(<span class="variable">SEL</span>)</span>aSelector withObject:<span class="params">(id)</span>anArgument afterDelay:<span class="params">(<span class="variable">NSTimeInterval</span>)</span>delay;</span></span><br></pre></td></tr></table></figure>
 </li>
