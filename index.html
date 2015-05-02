@@ -106,7 +106,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
+						<a href="/tags/DeJohn-Style/" style="font-size: 10px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -169,6 +169,73 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-博客空间搬家" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/04/30/博客空间搬家/" class="article-date">
+  	<time datetime="2015-04-30T13:50:21.000Z" itemprop="datePublished">2015-04-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/30/博客空间搬家/">博客空间搬家</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="事件起因">事件起因</h2><p>之前我的博客一直是在我同事的虚拟空间里，使用的是wordpress的个人博客系统。<br>最近一段时间总是发现博客访问不了，然后又感觉wordpress的使用有限制，于是决定自己来搞定自己的博客。</p>
+<h2 id="解决过程">解决过程</h2><p>通过搜索发现很多博客达人使用github+hexo的方式搭建免费又可以配置个人域名的博客空间，于是参照<a href="http://blog.lmintlcx.com/post/blog-with-hexo.html" target="_blank" rel="external">该hexo搭建教程</a>把hexo的个人博客给构建起来了  </p>
+<h2 id="CNAME问题">CNAME问题</h2><p>按照上面的教程搭建完成以后配置好了CNAME文件，输入网址<a href="http://www.dejohndong.com" target="_blank" rel="external">http://www.dejohndong.com</a>能顺利访问，<br>但是我每次<code>hexo deploy</code>以后github上的静态网页都会把CNAME文件给remove掉，造成个人域名不能访问。</p>
+<h3 id="解决思路">解决思路</h3><p>通过我自己对git的熟悉程度，我在我的博客空间<a href="https://github.com/openboy2012/openboy2012.github.io" target="_blank" rel="external">http://openboy2012.github.io</a>Repository创建一个prepare的分支，然后在我的博客空间的_config.yml文件配置改成如下配置：</p>
+<pre><code># Deployment  
+## <span class="string">Docs:</span> <span class="string">http:</span><span class="comment">//hexo.io/docs/deployment.html  </span>
+<span class="string">deploy:</span>  
+<span class="label">  type:</span> git  
+<span class="label">  repo:</span> <span class="string">https:</span><span class="comment">//github.com/openboy2012/openboy2012.github.io.git  </span>
+<span class="label">  branch:</span> prepare
+</code></pre><p>这样我的每次deploy会推送到prepare分支上面，再使用<code>git merge</code>命令把prepare分支的修改文章合并到master分支上面，这样CNAME文件就不会因为deploy命令被删除了。保证了每次发布新的文章以后能被及时地访问。</p>
+<h2 id="博客空间管理">博客空间管理</h2><p>创建博客空间我也是创建一个新的Repository推送到github上来进行管理，这样我就可以在任何一台电脑上把博客空间clone下进行博客文章的撰写了。</p>
+<h2 id="WordPress_文章迁移">WordPress 文章迁移</h2><p>我之前的文章都是写在wordpress上，导出文章的xml。然后安装<code>hexo-migrator-wordpress</code>插件把导出的xml导入到我的hexo博客空间里，不过格式会缺失，需要微调以后才能正常化。</p>
+<h2 id="文章编辑">文章编辑</h2><p>hexo创建的文章都是用markdown语法，对于写程序的我们来说应该也不算是个麻烦的事情，推荐几款好一点的markwon编辑器吧。<br><a href="https://itunes.apple.com/cn/app/mweb-lite-zhuan-ye-demarkdown/id979033429?mt=12" target="_blank" rel="external">MWeb Lite</a>免费好用的markdown编辑器，本人正在使用中。。。有钱的可以使用<a href="https://itunes.apple.com/cn/app/mweb-zhuan-ye-demarkdown-xie/id954188948?mt=12" target="_blank" rel="external">MWeb Pro</a>。<br>还有很多其他的编辑器，自己去发掘吧。</p>
+<h2 id="总结">总结</h2><p>作为一名程序员，一定要时刻保持着一颗学习的心，技术是在不断的更新中，我们也要不断得学习新的内容来提高自己的能力。加油吧，快乐的程序员，加油吧，快乐的钻钻她爹。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DeJohn-Style/">DeJohn Style</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9ansrunloop-e7-9a-84-e7-90-86-e8-a7-a3" class="article article-type-post" itemscope itemprop="blogPost">
   
