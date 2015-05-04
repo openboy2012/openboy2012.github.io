@@ -6,29 +6,17 @@
   <title>iOS学习笔记：iOS多线程的3种方式之GCD | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  
-我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
-优点：
-
-使用block技术（闭包）">
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS学习笔记：iOS多线程的3种方式之GCD">
-<meta property="og:url" content="http://yoursite.com/2015/03/07/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd/index.html">
+<meta property="og:url" content="http://yoursite.com/2015/03/07/iOS学习笔记：iOS多线程的3种方式之GCD/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
 <meta property="og:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  
-我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
-优点：
-
-使用block技术（闭包）">
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS学习笔记：iOS多线程的3种方式之GCD">
 <meta name="twitter:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
-为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  
-我的见解通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：
-优点：
-
-使用block技术（闭包）">
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。">
   
     <link rel="alternative" href="/atom.xml" title="DeJohn&#39;s Blog" type="application/atom+xml">
   
@@ -112,7 +100,7 @@
 					        
 								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
 					        
-								<a class="mail" target="_blank" href="/dongjia_9251@126.com" title="mail">mail</a>
+								<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 					        
 						</div>
 					</nav>
@@ -121,7 +109,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/DeJohn-Style/" style="font-size: 10px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
+						<a href="/tags/DeJohn-Style/" style="font-size: 13.33px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -176,17 +164,17 @@
 			        
 						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
 			        
-						<a class="mail" target="_blank" href="/dongjia_9251@126.com" title="mail">mail</a>
+						<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 			        
 				</div>
 			</nav>
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-iOS学习笔记：iOS多线程的3种方式之GCD" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/03/07/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd/" class="article-date">
+      <a href="/2015/03/07/iOS学习笔记：iOS多线程的3种方式之GCD/" class="article-date">
   	<time datetime="2015-03-07T02:12:24.000Z" itemprop="datePublished">2015-03-07</time>
 </a>
     </div>
@@ -221,18 +209,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
-<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。  </p>
+<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。<br><a id="more"></a></p>
 <h2 id="我的见解">我的见解</h2><p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出一下结论：</p>
 <p>优点：</p>
 <ol>
 <li>使用block技术（闭包），使代码看上去十分简洁，使用简单（适合新手）；</li>
 <li><p>能自动分配到空闲的处理器内核中，最大限度发挥多核心CPU的性能；<br>缺点：</p>
 </li>
-<li><p>不能管理线程的生命周期，不能满足某些需求例如图片上传的取消（AFNetworking中就是用NSOperation实现的）。<br>总结：iOS的多线程的这3种方式会一直存在着来满足不同的用户开发需求，三者相辅相成。我们不能一味的说哪种多线程的好与不好，只要找到某个场景下最合适的方法就可以了。</p>
+<li><p>不能管理线程的生命周期，不能满足某些需求例如图片上传的取消（AFNetworking中就是用NSOperation实现的）。</p>
+<h2 id="总结：">总结：</h2><p>iOS的多线程的这3种方式会一直存在着来满足不同的用户开发需求，三者相辅相成。我们不能一味的说哪种多线程的好与不好，只要找到某个场景下最合适的方法就可以了。</p>
 </li>
 </ol>
 <p>具体的使用我这边就不多讲了，推荐别人写的文章好了：</p>
-<h3 id="iOS多线程编程之Grand_Central_Dispatch(GCD)介绍和使用"><a href="http://blog.csdn.net/totogo2010/article/details/8016129" target="_blank" rel="external">iOS多线程编程之Grand Central Dispatch(GCD)介绍和使用 </a></h3>
+<h3 id="iOS多线程编程之Grand_Central_Dispatch(GCD)介绍和使用"><a href="http://blog.csdn.net/totogo2010/article/details/8016129" target="_blank" rel="external">iOS多线程编程之Grand Central Dispatch(GCD)介绍和使用</a></h3>
       
     </div>
     
@@ -241,7 +230,7 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/03/11/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9acategory-e4-b8-8eextension-e7-9a-84-e5-8c-ba-e5-88-ab/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/03/11/iOS学习笔记：Category与Extension的区别/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
@@ -251,7 +240,7 @@
     </a>
   
   
-    <a href="/2015/03/06/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bnsoperation/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">iOS学习笔记：iOS多线程的3种方式之NSOperation</div>
       <strong class="article-nav-caption">></strong>
     </a>
@@ -281,7 +270,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd" data-title="iOS学习笔记：iOS多线程的3种方式之GCD" data-url="http://yoursite.com/2015/03/07/ios-e5-ad-a6-e4-b9-a0-e7-ac-94-e8-ae-b0-ef-bc-9aios-e5-a4-9a-e7-ba-bf-e7-a8-8b-e7-9a-843-e7-a7-8d-e6-96-b9-e5-bc-8f-e4-b9-8bgcd/"></div>
+	<div class="ds-thread" data-thread-key="iOS学习笔记：iOS多线程的3种方式之GCD" data-title="iOS学习笔记：iOS多线程的3种方式之GCD" data-url="http://yoursite.com/2015/03/07/iOS学习笔记：iOS多线程的3种方式之GCD/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

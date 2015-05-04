@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>你好，访客 | DeJohn&#39;s Blog</title>
+  <title>iOS学习笔记：iOS多线程的3种方式之NSThread | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本人2011年开始从事iOS开发，目前混迹于嘉兴，一个小巧的城市，在这里你可以跟我交流iOS方面的所有技术。
-我的github地址：http://github.com/openboy2012.">
+  <meta name="description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="你好，访客">
-<meta property="og:url" content="http://yoursite.com/2015/02/13/hello-world/index.html">
+<meta property="og:title" content="iOS学习笔记：iOS多线程的3种方式之NSThread">
+<meta property="og:url" content="http://yoursite.com/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
-<meta property="og:description" content="本人2011年开始从事iOS开发，目前混迹于嘉兴，一个小巧的城市，在这里你可以跟我交流iOS方面的所有技术。
-我的github地址：http://github.com/openboy2012.">
+<meta property="og:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="你好，访客">
-<meta name="twitter:description" content="本人2011年开始从事iOS开发，目前混迹于嘉兴，一个小巧的城市，在这里你可以跟我交流iOS方面的所有技术。
-我的github地址：http://github.com/openboy2012.">
+<meta name="twitter:title" content="iOS学习笔记：iOS多线程的3种方式之NSThread">
+<meta name="twitter:description" content="众所周知：iOS的多线程的创建方式有3种：NSThread, NSOperation 和GCD(Grand_Central_Dispatch)。
+为什么苹果要出3种多线程呢？答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。">
   
     <link rel="alternative" href="/atom.xml" title="DeJohn&#39;s Blog" type="application/atom+xml">
   
@@ -100,7 +100,7 @@
 					        
 								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
 					        
-								<a class="mail" target="_blank" href="/dongjia_9251@126.com" title="mail">mail</a>
+								<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 					        
 						</div>
 					</nav>
@@ -109,7 +109,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/DeJohn-Style/" style="font-size: 10px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
+						<a href="/tags/DeJohn-Style/" style="font-size: 13.33px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -164,18 +164,18 @@
 			        
 						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
 			        
-						<a class="mail" target="_blank" href="/dongjia_9251@126.com" title="mail">mail</a>
+						<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 			        
 				</div>
 			</nav>
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-iOS学习笔记：iOS多线程的3种方式之NSThread" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/02/13/hello-world/" class="article-date">
-  	<time datetime="2015-02-13T00:52:36.000Z" itemprop="datePublished">2015-02-13</time>
+      <a href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/" class="article-date">
+  	<time datetime="2015-03-06T14:03:48.000Z" itemprop="datePublished">2015-03-06</time>
 </a>
     </div>
   
@@ -188,7 +188,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      你好，访客
+      iOS学习笔记：iOS多线程的3种方式之NSThread
     </h1>
   
 
@@ -196,11 +196,11 @@
       
       <div class="article-info article-info-post">
         
-        
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/DeJohn-Style/">DeJohn Style</a>
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS多线程/">iOS多线程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS学习笔记/">iOS学习笔记</a></li></ul>
 	</div>
 
+        
 
         <div class="clearfix"></div>
       </div>
@@ -208,9 +208,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>本人2011年开始从事iOS开发，目前混迹于嘉兴，一个小巧的城市，在这里你可以跟我交流iOS方面的所有技术。</p>
-<p>我的github地址：<a href="http://github.com/openboy2012" target="_blank" rel="external">http://github.com/openboy2012</a>.</p>
-
+        <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/" target="_blank" rel="external">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/" target="_blank" rel="external">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">GCD(Grand_Central_Dispatch)</a>。</p>
+<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。<br><a id="more"></a></p>
+<h2 id="我的见解">我的见解</h2><p>通过阅读苹果的官方文档和参考了同行中的大牛的理解得出以下结论：</p>
+<p>优点：</p>
+<ul>
+<li>NSThread 是轻量级的（大家公认的，Apple最早的多线程技术）；  </li>
+<li>可以管理生命周期，NSThread 是一个对象，必然可以通过代码来管理它的生命周期（ps：其实很多人认为这是它的缺点，使用起来复杂了需求，但是如果你有相应的需求的时候你会发现这才是你要的最好的多线程方式，看问题是需要多面的，在某些场景下优点与缺点会互换）。  </li>
+</ul>
+<p>缺点：  </p>
+<ul>
+<li>NSThread需要程序员自己处理其生命周期，数据同步问题（数据锁等），势必会影响了开发效率（ps：我以上的结论是站在不同使用角度的看法）;</li>
+<li>线程同步以及数据加锁这些使用会影响性能的开销。  </li>
+</ul>
+<h2 id="具体的使用我这边就不多讲了，推荐别人写的文章好了：">具体的使用我这边就不多讲了，推荐别人写的文章好了：</h2><h3 id="iOS多线程编程之NSThread的使用"><a href="http://blog.csdn.net/totogo2010/article/details/8010231" target="_blank" rel="external"> iOS多线程编程之NSThread的使用</a></h3>
       
     </div>
     
@@ -219,15 +230,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/02/25/e5-ae-9e-e7-8e-b0ios-e7-9a-84-e7-80-91-e5-b8-83-e6-b5-81-ef-bc-9addcollectionviewflowlayout/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          “[iOS开发源码]实现iOS的瀑布流：DDCollectionViewFlowLayout&quot;
+          iOS学习笔记：iOS多线程的3种方式之NSOperation
         
       </div>
     </a>
   
+  
+    <a href="/2015/03/02/滚动的数字：FlickerNumber/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">[源码]滚动的数字：FlickerNumber</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -254,7 +270,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="hello-world" data-title="你好，访客" data-url="http://yoursite.com/2015/02/13/hello-world/"></div>
+	<div class="ds-thread" data-thread-key="iOS学习笔记：iOS多线程的3种方式之NSThread" data-title="iOS学习笔记：iOS多线程的3种方式之NSThread" data-url="http://yoursite.com/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
