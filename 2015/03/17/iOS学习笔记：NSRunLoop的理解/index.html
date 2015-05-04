@@ -3,41 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>关于 | DeJohn&#39;s Blog</title>
+  <title>iOS学习笔记：NSRunLoop的理解 | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="4年以上iOS应用开发经验，
-熟悉iOS应用开发流程及 UIKit API、Graphics API、Cocoa API,GCD编程，基本了解C++的编程规范；
-拥有较强的iOS应用设计能力及良好的用户体验设计；
-熟悉iOS开发证书管理以及应用的发布流程;
-熟悉CocoaPods;
-拥有移动应用程序内数据库设计能力；
-熟悉MVC的工作机制；
-熟悉UIKit框架和Cocoa常用框架；
-精通iOS内存">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://yoursite.com/e5-85-b3-e4-ba-8e/index.html">
+  <meta name="description" content="背景有没有好奇过iOS应用不是像C程序那样执行完main函数以后就退出了，还可以在点击按钮以后弹出一些交互UI，还能通过手势滑动UI(如UIScrollView、UITableView等)，这一切都是NSRunLoop在帮忙。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS学习笔记：NSRunLoop的理解">
+<meta property="og:url" content="http://yoursite.com/2015/03/17/iOS学习笔记：NSRunLoop的理解/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
-<meta property="og:description" content="4年以上iOS应用开发经验，
-熟悉iOS应用开发流程及 UIKit API、Graphics API、Cocoa API,GCD编程，基本了解C++的编程规范；
-拥有较强的iOS应用设计能力及良好的用户体验设计；
-熟悉iOS开发证书管理以及应用的发布流程;
-熟悉CocoaPods;
-拥有移动应用程序内数据库设计能力；
-熟悉MVC的工作机制；
-熟悉UIKit框架和Cocoa常用框架；
-精通iOS内存">
+<meta property="og:description" content="背景有没有好奇过iOS应用不是像C程序那样执行完main函数以后就退出了，还可以在点击按钮以后弹出一些交互UI，还能通过手势滑动UI(如UIScrollView、UITableView等)，这一切都是NSRunLoop在帮忙。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于">
-<meta name="twitter:description" content="4年以上iOS应用开发经验，
-熟悉iOS应用开发流程及 UIKit API、Graphics API、Cocoa API,GCD编程，基本了解C++的编程规范；
-拥有较强的iOS应用设计能力及良好的用户体验设计；
-熟悉iOS开发证书管理以及应用的发布流程;
-熟悉CocoaPods;
-拥有移动应用程序内数据库设计能力；
-熟悉MVC的工作机制；
-熟悉UIKit框架和Cocoa常用框架；
-精通iOS内存">
+<meta name="twitter:title" content="iOS学习笔记：NSRunLoop的理解">
+<meta name="twitter:description" content="背景有没有好奇过iOS应用不是像C程序那样执行完main函数以后就退出了，还可以在点击按钮以后弹出一些交互UI，还能通过手势滑动UI(如UIScrollView、UITableView等)，这一切都是NSRunLoop在帮忙。">
   
     <link rel="alternative" href="/atom.xml" title="DeJohn&#39;s Blog" type="application/atom+xml">
   
@@ -121,7 +97,7 @@
 					        
 								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
 					        
-								<a class="mail" target="_blank" href="/dongjia_9251@126.com" title="mail">mail</a>
+								<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 					        
 						</div>
 					</nav>
@@ -130,7 +106,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/DeJohn-Style/" style="font-size: 10px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
+						<a href="/tags/DeJohn-Style/" style="font-size: 13.33px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 16.67px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 13.33px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 13.33px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -185,18 +161,18 @@
 			        
 						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
 			        
-						<a class="mail" target="_blank" href="/dongjia_9251@126.com" title="mail">mail</a>
+						<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 			        
 				</div>
 			</nav>
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-iOS学习笔记：NSRunLoop的理解" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/e5-85-b3-e4-ba-8e/index.html" class="article-date">
-  	<time datetime="2015-03-03T13:43:09.000Z" itemprop="datePublished">2015-03-03</time>
+      <a href="/2015/03/17/iOS学习笔记：NSRunLoop的理解/" class="article-date">
+  	<time datetime="2015-03-17T07:00:49.000Z" itemprop="datePublished">2015-03-17</time>
 </a>
     </div>
   
@@ -209,7 +185,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于
+      iOS学习笔记：NSRunLoop的理解
     </h1>
   
 
@@ -217,6 +193,10 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS学习笔记/">iOS学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS消息循环/">iOS消息循环</a></li></ul>
+	</div>
+
         
 
         <div class="clearfix"></div>
@@ -225,27 +205,46 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>4年以上iOS应用开发经验，</p>
-<p>熟悉iOS应用开发流程及 UIKit API、Graphics API、Cocoa API,GCD编程，基本了解C++的编程规范；</p>
-<p>拥有较强的iOS应用设计能力及良好的用户体验设计；</p>
-<p>熟悉iOS开发证书管理以及应用的发布流程;</p>
-<p>熟悉CocoaPods;</p>
-<p>拥有移动应用程序内数据库设计能力；</p>
-<p>熟悉MVC的工作机制；</p>
-<p>熟悉UIKit框架和Cocoa常用框架；</p>
-<p>精通iOS内存管理；</p>
-<p>基本了解Android开发流程；</p>
-<p>工作中认真负责，生活上热情开朗、学习能力突出，喜欢创新、对新事物有很大的好奇心。</p>
-<p>拥有一定的管理经验，擅长管理小型团队。</p>
-<p>最近的3个月，对自己写过的东西进行沉淀，虽然github的标星不多，但是每一行代码都是用心去写的。</p>
-<p>github地址：<a href="https://github.com/openboy2012" target="_blank" rel="external">https://github.com/openboy2012</a></p>
-<div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div><br><div id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd"></div>
+        <h2 id="背景">背景</h2><p>有没有好奇过iOS应用不是像C程序那样执行完main函数以后就退出了，还可以在点击按钮以后弹出一些交互UI，还能通过手势滑动UI(如UIScrollView、UITableView等)，这一切都是NSRunLoop在帮忙。<br><a id="more"></a></p>
+<h2 id="NSRunLoop官方定义">NSRunLoop官方定义</h2><p>官方文档的定义是<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSRunLoop_Class/index.html#//apple_ref/doc/uid/TP40003725" target="_blank" rel="external">NSRunLoop</a>，其字面意思是“运行回路”，它是一个循环、可以处理事件，是用来管理线程中输入的资源。iOS应用能在启动以后不退出，就是因为它的存在。<br>主线程中的NSRunLoop是默认开启的但是处于一种“等待”的状态，当有信息输入时NSRunLoop才会发生响应（消息分发，支持异步），所以主线程不会被卡线程。 </p>
+<h3 id="NSRunLoop的落脚点">NSRunLoop的落脚点</h3><p>每个创建的多线程都会自己创建一个NSRunLoop，但是默认非主线程的RunLoop是没有运行的，需要为RunLoop添加至少一个事件源，然后去run它。</p>
+<h3 id="NSRunLoop处理的事件">NSRunLoop处理的事件</h3><p>NSRunLoop能处理的事件有2种：一种是输入源，一种是定时源。<br>输入源包括3种：performSelector源，基于端口（Mach port）的源，以及自定义的源；他们都是用来处理异步事件的；<br>定时源即NSTimer，一般情况下是用来处理同步事件的。</p>
+<h3 id="NSRunLoop的使用场景">NSRunLoop的使用场景</h3><p>下来是Run Loop的使用场景：  </p>
+<ul>
+<li>使用port或是自定义的input source来和其他线程进行通信<afnetworking中有使用>;</afnetworking中有使用></li>
+<li>在线程（非主线程）中使用NSTimer</li>
+<li><p>使用 performSelector…系列</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="pp">- <span class="params">(void)</span>performSelector:<span class="params">(<span class="variable">SEL</span>)</span>aSelector withObject:<span class="params">(id)</span>anArgument afterDelay:<span class="params">(<span class="variable">NSTimeInterval</span>)</span>delay inModes:<span class="params">(<span class="variable">NSArray</span> *)</span>modes;  </span><br><span class="line">- <span class="params">(void)</span>performSelector:<span class="params">(<span class="variable">SEL</span>)</span>aSelector withObject:<span class="params">(id)</span>anArgument afterDelay:<span class="params">(<span class="variable">NSTimeInterval</span>)</span>delay;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用线程执行周期性工作</p>
+</li>
+</ul>
+<h2 id="引用别人的一篇文章觉得不错：">引用别人的一篇文章觉得不错：</h2><h3 id="-_(BOOL)runMode:(NSString_)mode_beforeDate:(NSDate_)limitDate_方法_详解"><a href="http://blog.csdn.net/wjsxiaoweige/article/details/38318733" target="_blank" rel="external"> - (BOOL)runMode:(NSString <em>)mode beforeDate:(NSDate </em>)limitDate 方法 详解 </a></h3>
       
     </div>
     
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2015/04/30/博客空间搬家/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          博客空间搬家
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/03/11/iOS学习笔记：Category与Extension的区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS学习笔记：Category与Extension的区别</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
@@ -269,7 +268,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="undefined" data-title="关于" data-url="http://yoursite.com/e5-85-b3-e4-ba-8e/index.html"></div>
+	<div class="ds-thread" data-thread-key="iOS学习笔记：NSRunLoop的理解" data-title="iOS学习笔记：NSRunLoop的理解" data-url="http://yoursite.com/2015/03/17/iOS学习笔记：NSRunLoop的理解/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
