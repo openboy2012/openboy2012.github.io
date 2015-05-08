@@ -223,7 +223,7 @@ var _hmt = _hmt || [];
       
         <h2 id="DDModel概要">DDModel概要</h2><p>不知不觉我已经毕业快4年了，iOS开发也做了4年多的时间了，也有了一定的经验积累，这次我将着重介绍我封装的模型基类—<a href="https://github.com/openboy2012/DDModel" target="_blank" rel="external">DDModel</a>。<br>DDModel封装了SQLite、HTTP以及JSON/XML的ORM特性，能快速搭建一个具有本地持久化，快速获取HTTP请求数据以及NSDictionary ORM到模型的模型层工具类，你只要根据自己的业务建模，极大地提高了开发的效率，把更多的精力放在UI的编写中去。<br><a id="more"></a></p>
 <h2 id="DDModel介绍">DDModel介绍</h2><ul>
-<li>DDModel继承了<a href="https://github.com/openboy2012/DDSQLiteKit.git" target="_blank" rel="external">SQLitePersistentObject</a>，这样就快速集成了SQLite存储ORM到对象的过程，之前的<a href="http://www.dejohndong.com/2015/05/04/iOS快速建模之DDModel/#more" target="_blank" rel="external">一篇文章</a>有介绍；</li>
+<li>DDModel继承了<a href="https://github.com/openboy2012/DDSQLiteKit.git" target="_blank" rel="external">SQLitePersistentObject</a>，这样就快速集成了SQLite存储ORM到对象的过程，之前的<a href="http://www.dejohndong.com/2015/05/04/iOS%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E4%B9%8BSQLitePersistentObject/" target="_blank" rel="external">一篇文章</a>有介绍；</li>
 <li>DDModel封装了基于<a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>的HTTP请求，简化了大部分开发者把http请求放在Controller层的操作，起到了解耦合的作用；  </li>
 <li>DDModel封装JSON/XML到Model的功能，使JSON/XML ORM到对象模型。使用到的第三方库分别是<a href="https://github.com/jamztang/JTObjectMapping" target="_blank" rel="external">JTObjectMapping</a>和<a href="https://github.com/nicklockwood/XMLDictionary" target="_blank" rel="external">XMLDictionary</a>；  </li>
 <li>DDModel也封装了HUD的功能，使用了<a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>，这样你再也不必为HUD烦恼了；  </li>
