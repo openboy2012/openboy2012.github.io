@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[源码]iOS快速建模之DDModel | DeJohn&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DDModel概要不知不觉我已经毕业快4年了，iOS开发也做了4年多的时间了，也有了一定的经验积累，这次我将着重介绍我封装的模型基类—DDModel。DDModel封装了SQLite、HTTP以及JSON/XML的ORM特性，能快速搭建一个具有本地持久化，快速获取HTTP请求数据以及NSDictionary ORM到模型的模型层工具类，你只要根据自己的业务建模，极大地提高了开发的效率，把更多的精力">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[源码]iOS快速建模之DDModel">
+<meta property="og:url" content="http://yoursite.com/2015/05/05/iOS快速建模之DDModel/index.html">
+<meta property="og:site_name" content="DeJohn's Blog">
+<meta property="og:description" content="DDModel概要不知不觉我已经毕业快4年了，iOS开发也做了4年多的时间了，也有了一定的经验积累，这次我将着重介绍我封装的模型基类—DDModel。DDModel封装了SQLite、HTTP以及JSON/XML的ORM特性，能快速搭建一个具有本地持久化，快速获取HTTP请求数据以及NSDictionary ORM到模型的模型层工具类，你只要根据自己的业务建模，极大地提高了开发的效率，把更多的精力">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[源码]iOS快速建模之DDModel">
+<meta name="twitter:description" content="DDModel概要不知不觉我已经毕业快4年了，iOS开发也做了4年多的时间了，也有了一定的经验积累，这次我将着重介绍我封装的模型基类—DDModel。DDModel封装了SQLite、HTTP以及JSON/XML的ORM特性，能快速搭建一个具有本地持久化，快速获取HTTP请求数据以及NSDictionary ORM到模型的模型层工具类，你只要根据自己的业务建模，极大地提高了开发的效率，把更多的精力">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+  
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb96ce8c6735bdbc1a52b6631afba814";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img lazy-src="http://tp4.sinaimg.cn/1492121455/180/5706505701/1" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">DeJohn Dong</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">董佳的博客</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/openboy2012" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/p/1005051492121455/home" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">钻钻她爹，有强迫症的iOS高级开发工程师...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">DeJohn Dong</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/1492121455/180/5706505701/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">DeJohn Dong</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">董佳的博客</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/openboy2012" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/p/1005051492121455/home" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-iOS快速建模之DDModel" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/05/iOS快速建模之DDModel/" class="article-date">
+  	<time datetime="2015-05-04T23:06:30.000Z" itemprop="datePublished">2015-05-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [源码]iOS快速建模之DDModel
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS开发/">iOS开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开源代码/">开源代码</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="DDModel概要">DDModel概要</h2><p>不知不觉我已经毕业快4年了，iOS开发也做了4年多的时间了，也有了一定的经验积累，这次我将着重介绍我封装的模型基类—<a href="https://github.com/openboy2012/DDModel" target="_blank" rel="external">DDModel</a>。<br>DDModel封装了SQLite、HTTP以及JSON/XML的ORM特性，能快速搭建一个具有本地持久化，快速获取HTTP请求数据以及NSDictionary ORM到模型的模型层工具类，你只要根据自己的业务建模，极大地提高了开发的效率，把更多的精力放在UI的编写中去。<br><a id="more"></a></p>
+<h2 id="DDModel介绍">DDModel介绍</h2><ul>
+<li>DDModel继承了<a href="https://github.com/openboy2012/DDSQLiteKit.git" target="_blank" rel="external">SQLitePersistentObject</a>，这样就快速集成了SQLite存储ORM到对象的过程，之前的<a href="http://www.dejohndong.com/2015/05/04/iOS快速建模之DDModel/#more" target="_blank" rel="external">一篇文章</a>有介绍；</li>
+<li>DDModel封装了基于<a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>的HTTP请求，简化了大部分开发者把http请求放在Controller层的操作，起到了解耦合的作用；  </li>
+<li>DDModel封装JSON/XML到Model的功能，使JSON/XML ORM到对象模型。使用到的第三方库分别是<a href="https://github.com/jamztang/JTObjectMapping" target="_blank" rel="external">JTObjectMapping</a>和<a href="https://github.com/nicklockwood/XMLDictionary" target="_blank" rel="external">XMLDictionary</a>；  </li>
+<li>DDModel也封装了HUD的功能，使用了<a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>，这样你再也不必为HUD烦恼了；  </li>
+<li>DDModel支持基于SQLite的Cache功能；  </li>
+<li>DDModel支持RESTfulAPI。  </li>
+</ul>
+<h2 id="如何获取代码？">如何获取代码？</h2><ul>
+<li><p>方法1：通过CocoaPods安装DDModel:<br><code>pod search ‘DDModel’</code>, 然后在你的Podfile中添加最新的版本<code>pod ‘DDModel’, ‘~&gt; 0.4’</code>,这是最快捷的方法，也是我强烈推荐的方法</p>
+</li>
+<li><p>方法2：通过github的代码仓库获取<a href="https://github.com/openboy2012/DDModel" target="_blank" rel="external">DDModel</a>;<br>你可以把该项目中的<code>DDModel/Classes</code>目录下的所有文件拷贝到你的项目里，然后再把DDModel依赖的第三方库：<a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>、<a href="https://github.com/nicklockwood/XMLDictionary" target="_blank" rel="external">XMLDictionary</a>、<a href="https://github.com/jamztang/JTObjectMapping" target="_blank" rel="external">JTObjectMapping</a>、<a href="https://github.com/openboy2012/DDSQLiteKit" target="_blank" rel="external">SQLitePersistentObject</a>、<a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>都要拷贝到你的项目。</p>
+</li>
+</ul>
+<h2 id="如何使用DDModel?">如何使用DDModel?</h2><h3 id="DDModelHTTPClient">DDModelHTTPClient</h3><p>参考Demo项目，你可以在你的AppDelegate里加入以下代码来启动一个DDModelHttpClient:<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)<span class="string">application:</span>(UIApplication *)application <span class="string">didFinishLaunchingWithOptions:</span>(NSDictionary *)launchOptions &#123;</span><br><span class="line">    <span class="comment">// Override point for customization after application launch.</span></span><br><span class="line"></span><br><span class="line">    [DDModelHttpClient <span class="string">startWithURL:</span>@“<span class="string">https:</span><span class="comment">//api.app.net/“ delegate:self]; // initialzie a DDModelHttpClient</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样你就启动了一个DDModelHTTPClient了，你可以通过DDModelHttpClientDelegate<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">@protocol DDHttpClientDelegate &lt;NSObject&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">@optional</span></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  Parameter encode method if you should encode the parameter in your HTTP client</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param params original parameters</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@return endcoded parameters</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (NSDictionary <span class="keyword">*</span>)encodeParameters:(NSDictionary <span class="keyword">*</span>)params;</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  Response String decode methods in you HTTP client</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param responseString origin responseString</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@return new responseString</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (NSString <span class="keyword">*</span>)decodeResponseString:(NSString <span class="keyword">*</span>)responseString;</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  Check the response values is an avaliable value.</span><br><span class="line">    e.g. You will sign in an account but you press a wrong username/password, server will response a error for you, you can catch them use this protocol methods and handle this error exception.</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param values  should check value</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param failure failure block</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@return true or false</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (BOOL)checkResponseValueAvaliable:(NSDictionary <span class="keyword">*</span>)values failure:(DDResponseFailureBlock)failure;</span><br><span class="line"></span><br><span class="line"><span class="comment">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>以上这些方法来定制自己的业务逻辑。<br>当然你可以在DDModelHTTPClient里使用AFNetworking里的所有功能。</p>
+<h3 id="DDModel">DDModel</h3><p>然后你就可以根据自己的业务创建各种继承于DDModel的模型了。</p>
+<p>举例：  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">User</span> : <span class="title">DDModel</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSNumber</span> *<span class="keyword">id</span>;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *username;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *avatarImageURLString;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Post</span> : <span class="title">DDModel</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *text;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSNumber</span> *<span class="keyword">id</span>;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) User *user;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">void</span>)getPostList:(<span class="keyword">id</span>)params</span><br><span class="line">           parentVC:(<span class="keyword">id</span>)viewController</span><br><span class="line">            showHUD:(<span class="built_in">BOOL</span>)show</span><br><span class="line">            success:(DDResponseSuccessBlock)success</span><br><span class="line">            failure:(DDResponseFailureBlock)failure;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import “Post.h”</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Post</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line"> * 对象解析的节点实现</span><br><span class="line"> */</span></span><br><span class="line">+ (<span class="built_in">NSString</span> *)parseNode&#123;</span><br><span class="line">    <span class="keyword">return</span> @“data”;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* jsonMapping 实现</span><br><span class="line"> * 使用场景： </span><br><span class="line"> * 1.返回数据与数据模型不一致时通过映射对应赋值,举例: @&#123;@“id”:@“userId”&#125; 返回数据中的id value 会赋值给数据模型的userId</span><br><span class="line"> * 2.对象的嵌套关系，如本例里Post对象嵌套了User对象</span><br><span class="line"> */</span></span><br><span class="line">+ (<span class="built_in">NSDictionary</span> *)parseMappings&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *  in [mappingWithKey:mappings:] method, key is your defined property key;</span><br><span class="line">     *  在’mappingWithKey:mapping:’中的key值是您定义的属性名名称,所以JSON字符串中的Value会映射给该属性字段；</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">id</span> userHandler = [User mappingWithKey:@“user” mapping:[User parseMappings]];</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *  this ‘user’ key is the JSON String’s Key</span><br><span class="line">     *  这个字典中的’user’ key值就是 JSON 字符串中的 user key;</span><br><span class="line">     */</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *jsonMappings = @&#123;@“user”:userHandler&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     *  所以整个JSON的映射关系就是把JSON字符串的User内容映射给我定义属性的user属性里，内部递归的关系按照user的parseMapping执行</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">return</span> jsonMappings;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">void</span>)getPostList:(<span class="keyword">id</span>)params</span><br><span class="line">           parentVC:(<span class="keyword">id</span>)viewController</span><br><span class="line">            showHUD:(<span class="built_in">BOOL</span>)show</span><br><span class="line">            success:(DDResponseSuccessBlock)success</span><br><span class="line">            failure:(DDResponseFailureBlock)failure</span><br><span class="line">&#123;</span><br><span class="line">    [[<span class="keyword">self</span> class] get:@“stream/<span class="number">0</span>/posts/stream/global” params:params showHUD:show parentViewController:viewController success:success failure:failure];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">User</span></span></span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">NSDictionary</span> *)parseMappings&#123;</span><br><span class="line">    <span class="comment">//支持keyPath的方式进行映射对象，可以随意重构数据对象</span></span><br><span class="line">    <span class="keyword">return</span> @&#123;@“avatar_image<span class="variable">.url</span>”:@“avatarImageURLString”&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>你可以将更多的方法封装在该派生的模型里。</p>
+<p>DDModel同时也支持从数据缓存中获取结果：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  Get json data first from db cache then from http server by HTTP GET Mehod.</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param path           HTTP Path</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param params         GET Paramtters</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param show           is show the HUD on the view</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param viewController parentViewController</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param dbResult       db cache result block</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param success        success block</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param failure        failre block</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">+ (void)get:(NSString <span class="keyword">*</span>)path</span><br><span class="line">     params:(id)params</span><br><span class="line">    showHUD:(BOOL)show</span><br><span class="line">parentViewController:(id)viewController</span><br><span class="line">  dbSuccess:(DDSQLiteBlock)dbResult</span><br><span class="line">    success:(DDResponseSuccessBlock)success</span><br><span class="line">    failure:(DDResponseFailureBlock)failure;</span><br><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  Get json data first from db cache then from http server by HTTP POST Mehod.</span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param path           HTTP Path</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param params         GET Paramtters</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param show           is show the HUD on the view</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param viewController parentViewController</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param dbResult       db cache result block</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param success        success block</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param failure        failre block</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">+ (void)post:(NSString <span class="keyword">*</span>)path</span><br><span class="line">      params:(id)params</span><br><span class="line">     showHUD:(BOOL)show</span><br><span class="line">parentViewController:(id)viewController</span><br><span class="line">   dbSuccess:(DDSQLiteBlock)dbResult</span><br><span class="line">     success:(DDResponseSuccessBlock)success</span><br><span class="line">     failure:(DDResponseFailureBlock)failure;</span><br></pre></td></tr></table></figure></p>
+<h2 id="总结">总结</h2><p>DDModel可以简化你的开发工作，把更多的精力放在UI的编写上。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/05/04/iOS数据持久化之SQLitePersistentObject/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">[源码]iOS数据持久化SQLitePersistentObject</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="iOS快速建模之DDModel" data-title="[源码]iOS快速建模之DDModel" data-url="http://yoursite.com/2015/05/05/iOS快速建模之DDModel/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 DeJohn Dong
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
