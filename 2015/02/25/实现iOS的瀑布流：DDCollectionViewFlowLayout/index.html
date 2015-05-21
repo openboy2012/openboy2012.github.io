@@ -11,8 +11,9 @@
 <meta property="og:url" content="http://yoursite.com/2015/02/25/实现iOS的瀑布流：DDCollectionViewFlowLayout/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
 <meta property="og:description" content="起因前段时间一直在做iOS客户端的64位适配，所以把开发项目设置成了最低系统要求为iOS6.0。空闲之余，准备把之前用UIScrollView实现的瀑布流用UICollectionView重新实现一下。于是DDCollectionViewFlowLayout就这样诞生了。">
-<meta property="og:image" content="http://ipa-download.qiniudn.com/effect1.gif">
-<meta property="og:image" content="http://ipa-download.qiniudn.com/effect2.gif">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/loadingmore.gif">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/waterfall.gif">
+<meta property="og:updated_time" content="2015-05-20T22:13:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[源码]实现iOS的瀑布流：DDCollectionViewFlowLayout">
 <meta name="twitter:description" content="起因前段时间一直在做iOS客户端的64位适配，所以把开发项目设置成了最低系统要求为iOS6.0。空闲之余，准备把之前用UIScrollView实现的瀑布流用UICollectionView重新实现一下。于是DDCollectionViewFlowLayout就这样诞生了。">
@@ -113,8 +114,6 @@ var _hmt = _hmt || [];
 					        
 								<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 					        
-								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
-					        
 						</div>
 					</nav>
 				</section>
@@ -122,7 +121,7 @@ var _hmt = _hmt || [];
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a><a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a><a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a><a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a><a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a><a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
+						<a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -179,8 +178,6 @@ var _hmt = _hmt || [];
 			        
 						<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
 			        
-						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
-			        
 				</div>
 			</nav>
 		</header>				
@@ -224,14 +221,13 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="起因">起因</h3><p>前段时间一直在做iOS客户端的64位适配，所以把开发项目设置成了最低系统要求为iOS6.0。空闲之余，准备把之前用UIScrollView实现的瀑布流用UICollectionView重新实现一下。<br>于是DDCollectionViewFlowLayout就这样诞生了。<br><a id="more"></a></p>
-<h3 id="学习步骤">学习步骤</h3><p>在学习UICollectionView的过程中,首先肯定是查阅苹果的官方文档<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/index.html#//apple_ref/swift/cl/UICollectionView" target="_blank" rel="external">UICollectionView</a>。<br>了解UICollectionView的基本信息以后得知要想实现瀑布流的效果必须使用<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/index.html#//apple_ref/doc/c_ref/UICollectionViewLayout" target="_blank" rel="external">UICollectionViewLayout</a>,继续参考苹果官方文档了解<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewFlowLayout_class/index.html#//apple_ref/occ/cl/UICollectionViewFlowLayout" target="_blank" rel="external">UICollectionViewFlowLayout</a>必须实现的方法和生命周期。<br>了解过UICollectionViewFlowLayout的Protocol方法以后，就可以着手写自己的代码了。首先 DDCollectionViewFlowLayout 继承了UICollectionViewFlowLayout,只要重载以下方法<br> <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">-</span> (<span class="tag">void</span>)<span class="tag">prepareLayout</span>;  </span><br><span class="line"><span class="tag">-</span> (<span class="tag">NSArray</span> *)<span class="rule"><span class="attribute">layoutAttributesForElementsInRect</span>:<span class="value">(CGRect)rect</span></span>;   </span><br><span class="line"><span class="tag">-</span> (<span class="tag">UICollectionViewLayoutAtttes</span> *)<span class="rule"><span class="attribute">layoutAttributesForItemAtIndexPath</span>:<span class="value">(NSIndexPath *)indexPath</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="学习步骤">学习步骤</h3><p>在学习UICollectionView的过程中,首先肯定是查阅苹果的官方文档<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/index.html#//apple_ref/swift/cl/UICollectionView" target="_blank" rel="external">UICollectionView</a>。<br>了解UICollectionView的基本信息以后得知要想实现瀑布流的效果必须使用<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/index.html#//apple_ref/doc/c_ref/UICollectionViewLayout" target="_blank" rel="external">UICollectionViewLayout</a>,继续参考苹果官方文档了解<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewFlowLayout_class/index.html#//apple_ref/occ/cl/UICollectionViewFlowLayout" target="_blank" rel="external">UICollectionViewFlowLayout</a>必须实现的方法和生命周期。<br>了解过UICollectionViewFlowLayout的Protocol方法以后，就可以着手写自己的代码了。首先 DDCollectionViewFlowLayout 继承了UICollectionViewFlowLayout,只要重载以下方法<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)prepareLayout;  &#10;- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect;   &#10;- (UICollectionViewLayoutAtttes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath;</span><br></pre></td></tr></table></figure></p>
 <p>就可以实现瀑布流的效果。  </p>
-<h3 id="怎么获得代码？">怎么获得代码？</h3><p>可以直接通过下面的链接在github中获取：<br><a href="https://github.com/openboy2012/DDCollectionViewFlowLayout" target="_blank" rel="external">https://github.com/openboy2012/DDCollectionViewFlowLayout</a><br>当然你也可以在CocoaPods中搜索：<br><code>pod search ‘DDCollectioViewFlowLayout’</code><br>效果图:<br><img src="http://ipa-download.qiniudn.com/effect1.gif" alt="effect1"><br><img src="http://ipa-download.qiniudn.com/effect2.gif" alt="effect2">  </p>
+<h3 id="怎么获得代码？">怎么获得代码？</h3><p>可以直接通过下面的链接在github中获取：<br><a href="https://github.com/openboy2012/DDCollectionViewFlowLayout" target="_blank" rel="external">https://github.com/openboy2012/DDCollectionViewFlowLayout</a><br>当然你也可以在CocoaPods中搜索：<br><code>pod search ‘DDCollectioViewFlowLayout’</code><br>效果图:<br><img src="http://ipa-download.qiniudn.com/loadingmore.gif" alt="effect1"><br><img src="http://ipa-download.qiniudn.com/waterfall.gif" alt="effect2">  </p>
 <h3 id="怎么使用？">怎么使用？</h3><pre><code>如果你只想简单应用，导入DDCollectionViewFlowLayout以后实现以下代码：  
 
 DDCollectionViewFlowLayout *layout = [[DDCollectionViewFlowLayout alloc] init];  
 layout<span class="variable">.delegate</span> = <span class="keyword">self</span>;  
-layout<span class="variable">.enableSticky</span> = <span class="literal">YES</span>; <span class="comment">//set header sticky if you want</span>
 [<span class="keyword">self</span><span class="variable">.collectionView</span> setLayout:layout];  
 
 然后要实现<span class="built_in">UICollectionViewDataSource</span> 方法中的必需方法：  
