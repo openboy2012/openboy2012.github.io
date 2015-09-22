@@ -23,22 +23,7 @@
     <link rel="icon" href="/favicon.png">
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-  
-<script type="text/javascript">
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?fb96ce8c6735bdbc1a52b6631afba814";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-
 </head>
-
 <body>
   <div id="container">
     <div class="left-col">
@@ -46,7 +31,9 @@ var _hmt = _hmt || [];
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img lazy-src="http://tp4.sinaimg.cn/1492121455/180/5706505701/1" class="js-avatar">
+			
+			<img src="http://tp4.sinaimg.cn/1492121455/180/5706505701/1" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+			
 		</a>
 
 		<hgroup>
@@ -302,6 +289,7 @@ var _hmt = _hmt || [];
 
 
 
+
 </div>
       <footer id="footer">
   <div class="outer">
@@ -318,17 +306,28 @@ var _hmt = _hmt || [];
     </div>
     
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: undefined,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: undefined
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
 <script src="/js/main.js" type="text/javascript"></script>
 
 
 
 
 
-<! -- mathjax config similar to math.stackexchange -->
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -349,7 +348,6 @@ MathJax.Hub.Queue(function() {
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-
 
 
   </div>
