@@ -15,7 +15,7 @@
 <meta property="og:description" content="起因最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  
 求人不如求己，那我就自己动手来实现该效果。在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。
 那我也尝试着使用Catego">
-<meta property="og:updated_time" content="2015-11-25T13:19:24.000Z">
+<meta property="og:updated_time" content="2015-11-25T13:21:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[源码]滚动的数字：FlickerNumber">
 <meta name="twitter:description" content="起因最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  
@@ -239,7 +239,7 @@
 <h3 id="处理滚动动画被打断">处理滚动动画被打断</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSRunLoop</span> currentRunLoop] addTimer:<span class="keyword">self</span><span class="variable">.currentTimer</span> forMode:<span class="built_in">NSRunLoopCommonModes</span>];</span><br></pre></td></tr></table></figure>
 <p>当UILabel处于一个滚动的视图中（如UICollectionView、UIScrollView等），在该视图滚动过程中，UILabel的滚动动画会被打断，使用改代码以后可以防止动画被打断。</p>
 <h2 id="更多">更多</h2><p>代码获得：<br><a href="https://github.com/openboy2012/FlickerNumber" target="_blank" rel="external">https://github.com/openboy2012/FlickerNumber</a><br>CocoaPods获得方式：<br><code>pod search &#39;FlickerNumber&#39;</code><br>方法的列表可以参考源码和github上的ReadMe.</p>
-<h3 id="Swift适配">Swift适配</h3><p>FlickerNumber的Swift版本也已经开发完成，完美兼容了XCode7、Swift 2.0的语法，源码已经提交。<br>CocoaPods获得方式：<br><code>pod search &#39;FlickerNumber-Swift&#39;</code></p>
+<h3 id="Swift适配">Swift适配</h3><p>FlickerNumber的Swift版本也已经开发完成，完美兼容了XCode7、Swift 2.0的语法，源码已经提交至github。<br>CocoaPods获得方式：<br><code>pod search &#39;FlickerNumber-Swift&#39;</code></p>
 <h2 id="总结">总结</h2><p>在写这个控件的时候，用到了很多技术点：runtime(运行时)、数学算法方法(logf()等算法)、<code>UILabel</code>的本身的一些特性（attributedText）、<code>NSNumberFormatter</code>的格式化输出和<code>NSString</code>的<code>stringWithFormat:</code>方法输出。我收获了不少iOS的技术知识和用法。但这些都只是一个程序员该有的基本能力。</p>
 <p>真正的意义是在于我这个开源过程。</p>
 <p>这个开源过程能告诉其他程序员如何开源自己写的代码，如何写出一个个简单的方法让调用者能简单应用而不用太关注具体的实现，同时也能让善于研究的开发者能理解代码的含义，这才是最困难的。代码的易读性和可维护性是至关重要的。</p>
@@ -318,7 +318,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2015 DeJohn Dong
+    		&copy; 2017 DeJohn Dong
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
