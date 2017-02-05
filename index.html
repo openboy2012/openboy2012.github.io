@@ -28,7 +28,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img src="http://tp4.sinaimg.cn/1492121455/180/5706505701/1" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+			<img src="https://avatars1.githubusercontent.com/u/2617618?v=3&amp;s=460" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
 			
 		</a>
 
@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
+						<a href="/tags/ARC-MRC/" style="font-size: 10px;">ARC & MRC</a> <a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/iOS基础/" style="font-size: 10px;">iOS基础</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -133,7 +133,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="http://tp4.sinaimg.cn/1492121455/180/5706505701/1" class="js-avatar">
+				<img lazy-src="https://avatars1.githubusercontent.com/u/2617618?v=3&amp;s=460" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">DeJohn Dong</h1>
@@ -168,6 +168,65 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-「钻」研iOS 之内存管理1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/05/「钻」研iOS 之内存管理1/" class="article-date">
+  	<time datetime="2017-02-05T04:44:12.000Z" itemprop="datePublished">2017-02-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/05/「钻」研iOS 之内存管理1/">『钻』研iOS 之 内存管理（一）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>iOS内存管理在我这6年工作经验过程中的变化可谓是翻天覆地，由于ARC（Automatic Refenerce Counting）的出现，大大简化了iOS开发者的内存管理优化工作。ARC不是垃圾回收机制，虽然开发者不用像以前那样刻意关心内存管理问题，但也不是意味着我们不需要了解iOS的内存管理。</p>
+<h2 id="堆（Heap）与栈(Stack)">堆（Heap）与栈(Stack)</h2><p>讲到内存，不得不先讲下堆栈，堆和栈的定义大家自己<a href="http://baike.baidu.com/link?url=2DK5Zuh6uTuATG_7IKOH8kNayWss2L_pOchRmk1mh6iYM5wo60g_QU1S4IoopLMQzy8f937n7U6_cwQSgZvRXnXo-b0QOEE2mfI3Ebo-u4S">百度百科</a>，本文不再展开，我只阐述自己的总结：<br>栈（操作系统）：由操作系统（编译器）自动分配释放，存放函数的参数值，局部变量的值、常量（int、bool）等。其操作方式类似于数据结构中的栈(Stack)。<br>堆（操作系统）：一般由程序员分配释放，一般的指针对象创建都存放在堆区，若程序员不释放，程序结束时可能由OS回收，分配方式类似于链表（Queue）。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARC-MRC/">ARC & MRC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Objective-C/">Objective-C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS基础/">iOS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存管理/">内存管理</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/02/05/「钻」研iOS 之内存管理1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-iOS快速建模之DDModel" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -681,64 +740,6 @@
       
         <p class="article-more-link">
           <a  href="/2015/03/02/滚动的数字：FlickerNumber/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-实现iOS的瀑布流：DDCollectionViewFlowLayout" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/02/25/实现iOS的瀑布流：DDCollectionViewFlowLayout/" class="article-date">
-  	<time datetime="2015-02-25T14:01:32.000Z" itemprop="datePublished">2015-02-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/02/25/实现iOS的瀑布流：DDCollectionViewFlowLayout/">[源码]实现iOS的瀑布流：DDCollectionViewFlowLayout</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="起因">起因</h3><p>前段时间一直在做iOS客户端的64位适配，所以把开发项目设置成了最低系统要求为iOS6.0。空闲之余，准备把之前用UIScrollView实现的瀑布流用UICollectionView重新实现一下。<br>于是DDCollectionViewFlowLayout就这样诞生了。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS开发/">iOS开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开源代码/">开源代码</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/02/25/实现iOS的瀑布流：DDCollectionViewFlowLayout/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
