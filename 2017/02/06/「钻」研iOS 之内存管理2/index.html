@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>『钻』研iOS 之 内存管理（二） | DeJohn&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上一讲中我把内存管理的基础、MRC与ARC作了自己的一些理解和经验分享，这一讲我会继续iOS内存管理方面的讲解。
+Block的内存管理Block有3种内存类型：NSGlobalBlock（全局块）：block内部没有引用任何外部变量的block是全局block（Global Block）；NSStackBlock（栈内存块）：block内部引用了block之外的外部变量的block是栈内存bloc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『钻』研iOS 之 内存管理（二）">
+<meta property="og:url" content="http://yoursite.com/2017/02/06/「钻」研iOS 之内存管理2/index.html">
+<meta property="og:site_name" content="DeJohn's Blog">
+<meta property="og:description" content="上一讲中我把内存管理的基础、MRC与ARC作了自己的一些理解和经验分享，这一讲我会继续iOS内存管理方面的讲解。
+Block的内存管理Block有3种内存类型：NSGlobalBlock（全局块）：block内部没有引用任何外部变量的block是全局block（Global Block）；NSStackBlock（栈内存块）：block内部引用了block之外的外部变量的block是栈内存bloc">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/D8E67C22-DB73-4BA4-B2E0-FAB50CA77FFB.png">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/block%E7%9A%84%E5%86%85%E5%AD%98%E5%8F%98%E5%8C%96.jpg">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/9901FB96-1D67-4E30-B09B-BFDB963193F4.png">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/955B9457-ADF5-4898-99E4-4B1A1E70837A.png">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/DA106C4E-C48B-4717-AE22-F33E2901977A.png">
+<meta property="og:image" content="http://ipa-download.qiniudn.com/DFDA366F-625D-4874-9A57-7A8B1EA0B5FB.png">
+<meta property="og:updated_time" content="2017-02-06T11:09:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="『钻』研iOS 之 内存管理（二）">
+<meta name="twitter:description" content="上一讲中我把内存管理的基础、MRC与ARC作了自己的一些理解和经验分享，这一讲我会继续iOS内存管理方面的讲解。
+Block的内存管理Block有3种内存类型：NSGlobalBlock（全局块）：block内部没有引用任何外部变量的block是全局block（Global Block）；NSStackBlock（栈内存块）：block内部引用了block之外的外部变量的block是栈内存bloc">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="https://avatars1.githubusercontent.com/u/2617618?v=3&amp;s=460" class="js-avatar" style="width: 100%;height: 100%;opacity: 1;">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">DeJohn Dong</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">董佳的博客</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/openboy2012" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/p/1005051492121455/home" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/ARC-MRC/" style="font-size: 10px;">ARC & MRC</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/C-混编/" style="font-size: 10px;">C++混编</a> <a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/Objective-C/" style="font-size: 12.5px;">Objective-C</a> <a href="/tags/iOS基础/" style="font-size: 12.5px;">iOS基础</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/内存管理/" style="font-size: 12.5px;">内存管理</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">钻钻她爹，有强迫症的iOS高级开发工程师...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">DeJohn Dong</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="https://avatars1.githubusercontent.com/u/2617618?v=3&amp;s=460" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">DeJohn Dong</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">董佳的博客</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/openboy2012" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/p/1005051492121455/home" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/diao-shu-79" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="Mailto:dongjia_9251@126.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-「钻」研iOS 之内存管理2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/06/「钻」研iOS 之内存管理2/" class="article-date">
+  	<time datetime="2017-02-06T12:00:29.000Z" itemprop="datePublished">2017-02-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      『钻』研iOS 之 内存管理（二）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Block/">Block</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-混编/">C++混编</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Objective-C/">Objective-C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS基础/">iOS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存管理/">内存管理</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上一讲中我把内存管理的基础、MRC与ARC作了自己的一些理解和经验分享，这一讲我会继续iOS内存管理方面的讲解。</p>
+<h2 id="Block的内存管理">Block的内存管理</h2><p>Block有3种内存类型：<br><code>NSGlobalBlock</code>（全局块）：block内部没有引用任何外部变量的block是全局block（Global Block）；<br><code>NSStackBlock</code>（栈内存块）：block内部引用了block之外的外部变量的block是栈内存block（Stack Block）；<br><code>NSMallocBlock</code>（堆内存块）：block内部引用了block之外的外部变量的block并且被copy了一次是堆内存block（Malloc Block）。<br><a id="more"></a><br><code>广告</code>：更多代码<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">demo</a>可以进入我的<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">github</a>进行下载查看运行结果，基本上每行关键代码都有详细的注释。本文中出现的代码都在这个项目下面，请结合项目代码阅读本文，效果更佳。</p>
+<h3 id="先看Block内存变化的相关代码">先看Block内存变化的相关代码</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block内存变化示例</span></span><br><span class="line">    [<span class="keyword">self</span> blockMemoryChangeExample];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block关键字变化引用示例</span></span><br><span class="line">    <span class="comment">//[self blockExample];</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block循环引用示例</span></span><br><span class="line">    <span class="comment">//[self cycleReferenceBlockExample];</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line">  block内存变化示例 内存的变化顺序为&#123;-&gt;[alloc]GlobalBlock、-&gt;[alloc]StackBlock-&gt;[copy]MallocBlock&#125;, block最初被设定的内存类型为全局内存类型（无外部变量），当block内部出现外部变量时转换为栈内存类型，再当此栈内存block被外部持有（copy）操作时会变成堆内存类型。</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)blockMemoryChangeExample &#123;</span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockGlobal)() = ^()&#123;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">18</span>;</span><br><span class="line">        <span class="comment">//没有引用外部变量的block是__NSGlobalBlock__</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"this is global block b is %d"</span>, b);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"this block type is %@"</span>, ddkitBlockGlobal); <span class="comment">//block内部没有使用任何的外部变量，所以是__NSGlobalBlock__</span></span><br><span class="line">    ddkitBlockGlobal();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">28</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//使用__weak能阻止编译器对block进行copy操作，从而保证了block的内存类型是栈block(__NSStackBlock__)</span></span><br><span class="line">    __<span class="keyword">weak</span> <span class="keyword">void</span> (^ddkitBlockStack)() = ^()&#123;</span><br><span class="line">        <span class="keyword">int</span> b = a;</span><br><span class="line">        <span class="comment">//使用外部变量的block是__NSStackBlock__</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"this is stack block, b is %d"</span>, b);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"this block type is %@"</span>, ddkitBlockStack); <span class="comment">//block内部使用了的外部变量a，所以是__NSStackBlock__</span></span><br><span class="line">    ddkitBlockStack();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block赋值操作</span></span><br><span class="line">    <span class="keyword">void</span> (^blockMemoryType)(<span class="keyword">void</span>) = ddkitBlockGlobal; <span class="comment">//对全局内存block copy不会形成堆内存block，内存地址也没有发生改变</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"copy from ddkitBlockGlobal blockMemoryType is %@, ddkitBlockGlobal is %@"</span>, blockMemoryType, ddkitBlockGlobal);</span><br><span class="line">    blockMemoryType = ddkitBlockStack; <span class="comment">//对栈内存block copy会形成堆内存block, 会产生新的地址</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"copy from ddkitBlockStack blockMemoryType is %@, ddkitBlockStack is %@"</span>, blockMemoryType, ddkitBlockStack);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：<br><img src="http://ipa-download.qiniudn.com/D8E67C22-DB73-4BA4-B2E0-FAB50CA77FFB.png" width="400"></p>
+<h4 id="总结分析：">总结分析：</h4><p>Block内存的变化流程图如下：<br><img src="http://ipa-download.qiniudn.com/block%E7%9A%84%E5%86%85%E5%AD%98%E5%8F%98%E5%8C%96.jpg" width="300"><br>我的总结：<br>1.全局内存Block和栈内存Block都是系统自己进行内存管理的，与类的方法的内存管理一致；<br>2.<code>__weak</code>显示调用可以阻止编译器对栈内存Block进行copy，所以<code>ddkitBlockStack</code>保留了栈内存类型b；<br>3.Xcode编译器在ARC环境下给对象的默认关键字是<code>__strong</code>，所以<code>blockMemoryType = ddkitBlockStack</code>赋值形成了堆内存Block。</p>
+<h3 id="MRC环境下尝试Block的内存引用计数相关的示例代码">MRC环境下尝试Block的内存引用计数相关的示例代码</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#pragma mark - MRC下测试block相关的retain、release、copy操作</span></span><br><span class="line"><span class="comment">//全局内存Block尝试retain、copy、release等方法</span></span><br><span class="line">- (<span class="keyword">void</span>)mrcGlobalBlockExample</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"===== MRC GlobalBlock retainCount methods begin ====="</span>);</span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockGlobal)() = ^()&#123;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">18</span>;</span><br><span class="line">        <span class="comment">//没有引用外部变量的block是__NSGlobalBlock__</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"this is global block b is %d"</span>, b);</span><br><span class="line">    &#125;;</span><br><span class="line">    ddkitBlockGlobal();</span><br><span class="line">    [ddkitBlockGlobal release]; <span class="comment">//release操作对全局内存Block无效</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"ddkitBlockGlobal retainCount = %lu"</span>, [ddkitBlockGlobal retainCount]);</span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockGlobalRetain)() = [ddkitBlockGlobal retain]; <span class="comment">//尝试retain方法</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"ddkitBlockGlobal[%@] retainCount = %lu, ddkitBlockGlobalRetain[%@] retainCount = %lu"</span>, ddkitBlockGlobal, [ddkitBlockGlobal retainCount], ddkitBlockGlobalRetain, [ddkitBlockGlobalRetain retainCount]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockGlobalCopy)() = [ddkitBlockGlobal <span class="keyword">copy</span>]; <span class="comment">//尝试copy方法</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"ddkitBlockGlobal[%@] retainCount = %lu, ddkitBlockGlobalCopy[%@] retainCount = %lu"</span>, ddkitBlockGlobal, [ddkitBlockGlobal retainCount], ddkitBlockGlobalCopy, [ddkitBlockGlobalCopy retainCount]);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"===== MRC GlobalBlock retainCount methods end ====="</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//栈内存Block尝试retain、copy、release等方法</span></span><br><span class="line">- (<span class="keyword">void</span>)mrcStackBlockExample</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"===== MRC StackBlock retainCount methods begin ====="</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockGlobal)() = ^()&#123;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">28</span> + a;</span><br><span class="line">        <span class="comment">//引用外部变量的block是__NSStackBlock__</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"this is stack block b is %d"</span>, b);</span><br><span class="line">    &#125;;</span><br><span class="line">    ddkitBlockGlobal();</span><br><span class="line">    [ddkitBlockGlobal release]; <span class="comment">//release操作对栈内存Block无效</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"ddkitBlockGlobal retainCount = %lu"</span>, [ddkitBlockGlobal retainCount]);</span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockGlobalRetain)() = [ddkitBlockGlobal retain]; <span class="comment">//尝试retain方法</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"ddkitBlockGlobal[%@] retainCount = %lu, ddkitBlockGlobalRetain[%@] retainCount = %lu"</span>, ddkitBlockGlobal, [ddkitBlockGlobal retainCount], ddkitBlockGlobalRetain, [ddkitBlockGlobalRetain retainCount]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockGlobalCopy)() = [ddkitBlockGlobal <span class="keyword">copy</span>]; <span class="comment">//尝试copy方法</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"ddkitBlockGlobal[%@] retainCount = %lu, ddkitBlockGlobalCopy[%@] retainCount = %lu"</span>, ddkitBlockGlobal, [ddkitBlockGlobal retainCount], ddkitBlockGlobalCopy, [ddkitBlockGlobalCopy retainCount]);</span><br><span class="line">    [ddkitBlockGlobalCopy release]; <span class="comment">//release操作对堆内存Block有效，所以下一行注释掉代码出现崩溃。</span></span><br><span class="line">    <span class="comment">//NSLog(@"ddkitBlockGlobalCopy = %@",ddkitBlockGlobalCopy);</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"===== MRC StackBlock retainCount methods end ====="</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：<br><img src="http://ipa-download.qiniudn.com/9901FB96-1D67-4E30-B09B-BFDB963193F4.png" width="400"></p>
+<h4 id="总结分析：-1">总结分析：</h4><p>1.全局内存Block和栈内存Block的copy、release、retain方法都是无效的，指针地址和retainCount都不会发生变化。<br>2.只有栈内存Block通过copy方法能变成堆内存Block（retain方法无效，retain方法对所有内存类型的block都起不到引用计数+1的作用），然后通过release方法可以释放堆内存Block。</p>
+<h3 id="blockExample的示例代码">blockExample的示例代码</h3><p>并点击UI中的Crash按钮（<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">demo</a>示例）发生崩溃(连续点击几次)：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block内存变化示例</span></span><br><span class="line">    <span class="comment">//[self blockMemoryChangeExample];</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block关键字变化引用示例</span></span><br><span class="line">    [<span class="keyword">self</span> blockExample];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block循环引用示例</span></span><br><span class="line">    <span class="comment">//[self cycleReferenceBlockExample];</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">IBAction</span>)clickCrashButton:(<span class="keyword">id</span>)sender</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.isUseCrashCode</span> = <span class="literal">YES</span>;</span><br><span class="line">    [<span class="keyword">self</span> blockExample];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)blockExample &#123;</span><br><span class="line">     <span class="keyword">int</span> a = <span class="number">49</span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//    __weak //使用__weak也能阻止编译器对block进行copy操作，而且更加安全，这里使用__unsafe_unretained只是试验关键字的效果</span></span><br><span class="line">    __unsafe_unretained <span class="comment">//此处加上__unsafe_unretained是因为在ARC环境下可以阻止Clang编译器对block进行copy操作，从而保持block的内存类型是栈类型</span></span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockNoCopy)() = ^()&#123;</span><br><span class="line">        <span class="keyword">int</span> b = a;</span><br><span class="line">        <span class="comment">/*</span><br><span class="line">         因为引用了block之外的外部变量，所以是栈block</span><br><span class="line">         这里运行到了打印ddkitBlockTwo的时侯崩溃，因为使用了__unsafe_unretained关键让ARC环境下不对block进行copy操作。</span><br><span class="line">         结合打印的日志，这里证明了2点：</span><br><span class="line">         1.__unsafe_unretained确实在ARC的环境下让block赋值操作时不自动copy，从而保证了block的内存类型是栈block(__NSStackBlock__);</span><br><span class="line">         2.__unsafe_unretained确实不安全，在运行到&#125;结束时，指针对象已经被清理，但指针还是保存着之前的地址，再访问时造成了EXC_BAD_ACCESS</span><br><span class="line">         */</span></span><br><span class="line">        <span class="preprocessor">#warning 因为ddkitBlockTwo是局部变量，不存在循环引用的问题，可以放心地在&#123;&#125;引用self</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.isUseCrashCode</span>) &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"this block type is %@ b is %d"</span>, ddkitBlockNoCopy, b);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"this is stack block, b is %d"</span>, b);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"this block type is %@"</span>, ddkitBlockNoCopy); <span class="comment">//这里能正确打印block的类型，此处为__NSStackBlock__</span></span><br><span class="line">    ddkitBlockNoCopy();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//在ARC环境下，默认关键字是__strong，会对block进行copy操作，所以block的内存类型会变成堆类型；同理在MRC环境下需要显示调用copy方法来把GlobalBlock或者StackBlock转换成MallocBlock</span></span><br><span class="line">    <span class="keyword">void</span> (^ddkitBlockMalloc)() = ^()&#123;</span><br><span class="line">        <span class="keyword">int</span> b = a + a;</span><br><span class="line">        <span class="comment">//引用了外部变量，并且把这个block赋值给了ddkitBlockTwo(有copy操作)，所以是__NSMallocBlock__</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"this block type is %@ b is %d"</span>, ddkitBlockMalloc, b); <span class="comment">//因为ddkitBlockThree是局部变量，在ARC环境下到了&#123;&#125;之外就会被清理，所以会打印null空指针</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"this block type is %@"</span>, ddkitBlockMalloc);</span><br><span class="line">    ddkitBlockMalloc();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码执行的结果如下：<br><img src="http://ipa-download.qiniudn.com/955B9457-ADF5-4898-99E4-4B1A1E70837A.png" width="400"></p>
+<h4 id="总结分析：-2">总结分析：</h4><p>代码运行到了打印ddkitBlockNoCopy的时侯发生崩溃—<code>EXC_BAD_ACCESS</code>：因为ddkitBlockNoCopy使用了<code>__unsafe_unretained</code>关键字，所以在ARC环境下没有对ddkitBlockNoCopy进行copy操作，从而ddkitBlockNoCopy保持了栈内存Block。当程序运行到『}』结束时，ddkitBlockNoCopy指针内存已经被清理，但指针还是保存着地址（指针没有置nil），接着在Block内部访问ddkitBlockNoCopy指针时造成了<code>EXC_BAD_ACCESS</code>。<br>结论：<br><code>__unsafe_unretained</code>确实不安全，没有及时把指针置成nil是非常有风险的事情。我们需要<code>__unsafe_unretained</code>替换成<code>__weak</code>，这样程序才是安全的。</p>
+<h3 id="Block的循环引用">Block的循环引用</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//interface </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^ CycleReferenceBlock)(<span class="keyword">void</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) CycleReferenceBlock block; <span class="comment">//声明block成员变量，ARC环境下，用strong与copy关键字都一样，都会对block内存进行copy</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block内存变化示例</span></span><br><span class="line">    <span class="comment">//[self blockMemoryChangeExample];</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block关键字变化引用示例</span></span><br><span class="line">    <span class="comment">//[self blockExample];</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//block循环引用示例</span></span><br><span class="line">    [<span class="keyword">self</span> cycleReferenceBlockExample];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//implementation</span></span><br><span class="line">- (<span class="keyword">IBAction</span>)cycleReferenceBlockExample</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.switchCycleReferen</span><span class="variable">.on</span>) &#123;</span><br><span class="line">        __<span class="keyword">weak</span> __<span class="keyword">typeof</span>(<span class="keyword">self</span>) bSelf = <span class="keyword">self</span>; <span class="comment">//因为block是self的成员变量，会造成循环引用的问题，所以在block外部先__weak一次打破循环引用</span></span><br><span class="line">        <span class="keyword">self</span><span class="variable">.block</span> = ^() &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"this is cycle reference in blocks, result is %d, cycle reference is broken, this viewContoller can dealloc"</span>, bSelf<span class="variable">.isUseCrashCode</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.block</span>();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.block</span> = ^() &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@"this is cycle reference in blocks, result is %d, cycle reference is happened, this viewContoller can't dealloc"</span>, <span class="keyword">self</span><span class="variable">.isUseCrashCode</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.block</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码运行的结果如下：<br><img src="http://ipa-download.qiniudn.com/DA106C4E-C48B-4717-AE22-F33E2901977A.png" width="400"><br><code>结论</code>：只有堆内存的block才<code>有可能</code>发生循环引用，本栗子中cycleReferenceBlock被self进行copy持有，然后如果在block内部引用self的话就存在了block持有self、self持有block的典型Block循环引用问题，所以当前的UIViewController无法释放。<br>在block外部先把self进行<code>__weak</code>方法把self弱引用成weakSelf，在block内部使用弱引用的weakSelf时就能正常释放UIViewController了。</p>
+<h2 id="Objective-C与C++混编（CF对象）">Objective-C与C++混编（CF对象）</h2><p>本人有过OC与C++对象混编的经验，所以把bridge的相关内存管理问题简单描述下：<br>首先，ARC环境只适用Objective-C/Swift对象，C++对象（包含苹果的CF对象）都需要开发者手动内存管理。<br>先来讲解下ARC环境下OC与C++混编时用到的关键字：<br><code>__bridge</code>：CF对象（C++对象）桥接OC对象，没有牵扯到对象所有权（主要是内存管理的权限）交接；<br>这就意味着OC创建的对象要在OC端释放，C++创建的对象要在C++端释放，两者对象互不影响。<br><code>__bridge_transfer</code>：常用在将CF对象（C++对象）转换成OC对象时，将CF对象（C++对象）的所有权交给OC对象，此时ARC就能自动管理该内存；（作用同CFBridgingRelease()）<br>使用这个关键字以后C++创建的对象不需要在C++端释放，ARC会对其进行内存管理，如果C++端把内存释放，OC端会出现<code>EXC_BAD_ACCESS</code>。<br><code>__bridge_retained</code>：（与__bridge_transfer相反）常用在将OC对象转换成CF对象时，将OC对象的所有权交给CF对象来管理；(作用同CFBridgingRetain())<br>使用这个关键字以后OC的对象会被C++来管理，如果OC对象提前释放了，会造成C++端<code>EXC_BAD_ACCESS</code>。</p>
+<h2 id="深拷贝与浅拷贝">深拷贝与浅拷贝</h2><p><code>深拷贝</code>是内容拷贝，产生了新的指针，内存生命周期重新开始；<br><code>浅拷贝</code>是指针拷贝，retainCount+1。</p>
+<h3 id="系统对象的可变与不可变对象">系统对象的可变与不可变对象</h3><p><code>immutable不可变对象</code>（NSString、NSDictionary、NSArrary、NSSet等）<br><code>mutable可变对象</code> (NSMutableString, NSMutableDictionary, NSMutableArray, NSMutableSet等) </p>
+<h3 id="集合与非集合对象">集合与非集合对象</h3><p>在非集合类对象中：对immutable对象进行copy操作，是指针复制，mutableCopy操作时内容复制；对mutable对象进行copy和mutableCopy都是内容复制。用代码简单表示如下：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[immutableObject <span class="keyword">copy</span>] <span class="comment">// 浅复制</span></span><br><span class="line">[immutableObject mutableCopy] <span class="comment">//深复制</span></span><br><span class="line">[mutableObject <span class="keyword">copy</span>] <span class="comment">//深复制</span></span><br><span class="line">[mutableObject mutableCopy] <span class="comment">//深复制</span></span><br></pre></td></tr></table></figure></p>
+<p>在集合类对象中，对immutable对象进行copy，是指针复制，mutableCopy是内容复制；对mutable对象进行copy和mutableCopy都是内容复制。但是：集合对象的内容复制仅限于对象本身，对象元素仍然是指针复制。用代码简单表示如下：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[immutableObject <span class="keyword">copy</span>] <span class="comment">// 浅复制</span></span><br><span class="line">[immutableObject mutableCopy] <span class="comment">//单层深复制</span></span><br><span class="line">[mutableObject <span class="keyword">copy</span>] <span class="comment">//单层深复制</span></span><br><span class="line">[mutableObject mutableCopy] <span class="comment">//单层深复制</span></span><br></pre></td></tr></table></figure></p>
+<p>代码示例：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)copyExample</span><br><span class="line">&#123;</span><br><span class="line">    _dict = [[<span class="built_in">NSDictionary</span> alloc] initWithObjectsAndKeys:<span class="string">@"1"</span>,<span class="string">@"key"</span>,<span class="literal">nil</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"dict retainCount is %lu"</span>, _dict<span class="variable">.retainCount</span>);</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dict2 = [<span class="keyword">self</span><span class="variable">.dict</span> <span class="keyword">copy</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"dict2 retainCount is %lu, dict retainCount is %lu"</span>, dict2<span class="variable">.retainCount</span>, <span class="keyword">self</span><span class="variable">.dict</span><span class="variable">.retainCount</span>);</span><br><span class="line">    <span class="built_in">NSDictionary</span> *mutableCopyDict = [<span class="keyword">self</span><span class="variable">.dict</span> mutableCopy];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"mutableCopyDict retainCount is %lu, dict retainCount is %lu"</span>, mutableCopyDict<span class="variable">.retainCount</span>, <span class="keyword">self</span><span class="variable">.dict</span><span class="variable">.retainCount</span>);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"dict addess is %p dict2 address is %p mutableCopyDict address is %p"</span>, <span class="keyword">self</span><span class="variable">.dict</span>, dict2, mutableCopyDict);</span><br><span class="line">    [_dict release];</span><br><span class="line">    [_dict release]; <span class="comment">//因为immutable类型对象copy是指针拷贝，没有产生新的指针，只是在原来的指针retainCount+1，所以可以对_dict进行2次release而不发生崩溃，第二次[_dict release]与[dict2 release]等价</span></span><br><span class="line">    [mutableCopyDict release]; <span class="comment">//内容复制产生了新的指针，需要手动释放才能避免内存泄漏。</span></span><br><span class="line">    </span><br><span class="line">    _mDict = [[<span class="built_in">NSMutableDictionary</span> alloc] initWithObjectsAndKeys:<span class="string">@"1"</span>,<span class="string">@"key"</span>,<span class="literal">nil</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"mDict retainCount is %lu"</span>, _mDict<span class="variable">.retainCount</span>);</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dict3 = [<span class="keyword">self</span><span class="variable">.mDict</span> <span class="keyword">copy</span>];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"dict3 retainCount is %lu, mDict retainCount is %lu"</span>, dict3<span class="variable">.retainCount</span>, <span class="keyword">self</span><span class="variable">.mDict</span><span class="variable">.retainCount</span>);</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dict4 = [<span class="keyword">self</span><span class="variable">.mDict</span> mutableCopy];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"dict4 retainCount is %lu, mDict retainCount is %lu"</span>, dict4<span class="variable">.retainCount</span>, <span class="keyword">self</span><span class="variable">.mDict</span><span class="variable">.retainCount</span>);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"mDict addess is %p dict3 address is %p, dict4 address is %p"</span>, <span class="keyword">self</span><span class="variable">.mDict</span>, dict3, dict4);</span><br><span class="line">    [_mDict release];</span><br><span class="line">    [dict4 release]; <span class="comment">//内容复制产生了新的指针，需要手动释放才能避免内存泄漏。</span></span><br><span class="line">    [_mDict release]; <span class="comment">//因为mutable类型对象copy以后产生了新的指针，对mDict进行释放是发生崩溃</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果：<br><img src="http://ipa-download.qiniudn.com/DFDA366F-625D-4874-9A57-7A8B1EA0B5FB.png" width="400"><br><code>广告</code>：更多代码<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">demo</a>可以进入我的<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">github</a>进行下载查看运行结果，基本上每行关键代码都有详细的注释。本文中出现的代码都在这个项目下面，请结合项目代码阅读本文，效果更佳。</p>
+<p>结合实例代码和运行结果总结：<br><code>immutable</code>对象<code>copy</code>以后引用计数+1,<code>mutableCopy</code>产生新的指针地址，内存管理重新开始；<br><code>mutable</code>对象<code>copy</code>与<code>mutableCopy</code>都产生了新的指针地址，内存管理重新开始。</p>
+<h3 id="为什么我们@property一个NSString使用copy修饰？">为什么我们@property一个NSString使用copy修饰？</h3><p>因为<code>NSString</code>是一个<code>immutable对象</code>，使用copy是指针复制（与retain效果一样），同时<code>NSString</code>可以指向<code>NSMutableString</code>创建的指针，使用copy会对<code>NSMutableString</code>的指针进行内容拷贝（产生新的指针），这时如果<code>NSMutableString</code>的指针内容即使发生了改变，也不会影响到<code>NSString</code>的指针内容。<br>这个原理也适用NSDictionary、NSSet和NSArray等系统对象。我们可以根据自己的需求来选择<code>strong</code>或者<code>copy</code>关键字来修饰相应的属性。</p>
+<h3 id="关于自定义对象的copy">关于自定义对象的copy</h3><p>上文中提到的对象都是系统级的对象，自定义对象要实现<code>copy</code>方法就要实现NSCopying协议。如果对没有实现<code>NSCopying</code>协议（主要是<code>copyWithZone：</code>方法的实现）的对象进行copy操作会发生崩溃，报<code>*** Terminating app due to uncaught exception &#39;NSInvalidArgumentException&#39;, &#39;reason: &#39;-[XXX copyWithZone:]: unrecognized selector sent to instance 0xXXXXXX&#39;</code>。</p>
+<p>参考资料：<br><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html" target="_blank" rel="external">Working with Blocks</a><br><a href="https://developer.apple.com/library/content/documentation/CoreFoundation/Conceptual/CFDesignConcepts/Articles/tollFreeBridgedTypes.html#//apple_ref/doc/uid/TP40010677-SW1" target="_blank" rel="external">Toll-Free Bridged Types</a><br><a href="https://www.zybuluo.com/MicroCai/note/50592" target="_blank" rel="external">深拷贝与浅拷贝</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/02/05/「钻」研iOS 之内存管理1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">『钻』研iOS 之 内存管理（一）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="「钻」研iOS 之内存管理2" data-title="『钻』研iOS 之 内存管理（二）" data-url="http://yoursite.com/2017/02/06/「钻」研iOS 之内存管理2/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 DeJohn Dong
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: undefined,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: undefined
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

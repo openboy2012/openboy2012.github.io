@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ARC-MRC/" style="font-size: 10px;">ARC & MRC</a> <a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/Objective-C/" style="font-size: 10px;">Objective-C</a> <a href="/tags/iOS基础/" style="font-size: 10px;">iOS基础</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/内存管理/" style="font-size: 10px;">内存管理</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
+						<a href="/tags/ARC-MRC/" style="font-size: 10px;">ARC & MRC</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/C-混编/" style="font-size: 10px;">C++混编</a> <a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/Objective-C/" style="font-size: 12.5px;">Objective-C</a> <a href="/tags/iOS基础/" style="font-size: 12.5px;">iOS基础</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/内存管理/" style="font-size: 12.5px;">内存管理</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -169,11 +169,70 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-「钻」研iOS 之内存管理2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/06/「钻」研iOS 之内存管理2/" class="article-date">
+  	<time datetime="2017-02-06T12:00:29.000Z" itemprop="datePublished">2017-02-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/06/「钻」研iOS 之内存管理2/">『钻』研iOS 之 内存管理（二）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上一讲中我把内存管理的基础、MRC与ARC作了自己的一些理解和经验分享，这一讲我会继续iOS内存管理方面的讲解。</p>
+<h2 id="Block的内存管理">Block的内存管理</h2><p>Block有3种内存类型：<br><code>NSGlobalBlock</code>（全局块）：block内部没有引用任何外部变量的block是全局block（Global Block）；<br><code>NSStackBlock</code>（栈内存块）：block内部引用了block之外的外部变量的block是栈内存block（Stack Block）；<br><code>NSMallocBlock</code>（堆内存块）：block内部引用了block之外的外部变量的block并且被copy了一次是堆内存block（Malloc Block）。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Block/">Block</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-混编/">C++混编</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Objective-C/">Objective-C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS基础/">iOS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存管理/">内存管理</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/02/06/「钻」研iOS 之内存管理2/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-「钻」研iOS 之内存管理1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2017/02/05/「钻」研iOS 之内存管理1/" class="article-date">
-  	<time datetime="2017-02-05T05:08:23.000Z" itemprop="datePublished">2017-02-05</time>
+  	<time datetime="2017-02-05T01:20:33.000Z" itemprop="datePublished">2017-02-05</time>
 </a>
     </div>
   
@@ -680,66 +739,6 @@
       
         <p class="article-more-link">
           <a  href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-滚动的数字：FlickerNumber" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/02/滚动的数字：FlickerNumber/" class="article-date">
-  	<time datetime="2015-03-02T14:50:32.000Z" itemprop="datePublished">2015-03-02</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/02/滚动的数字：FlickerNumber/">[源码]滚动的数字：FlickerNumber</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="起因">起因</h2><p>最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  </p>
-<p>求人不如求己，那我就自己动手来实现该效果。在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，<br>例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。</p>
-<p>那我也尝试着使用Category的方式来实现该数字滚动的效果。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS开发/">iOS开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开源代码/">开源代码</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/03/02/滚动的数字：FlickerNumber/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
