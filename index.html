@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ARC-MRC/" style="font-size: 10px;">ARC & MRC</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/C-混编/" style="font-size: 10px;">C++混编</a> <a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/Objective-C/" style="font-size: 12.5px;">Objective-C</a> <a href="/tags/iOS基础/" style="font-size: 12.5px;">iOS基础</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/内存管理/" style="font-size: 12.5px;">内存管理</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
+						<a href="/tags/ARC-MRC/" style="font-size: 10px;">ARC & MRC</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/C-混编/" style="font-size: 10px;">C++混编</a> <a href="/tags/DeJohn-Style/" style="font-size: 12.5px;">DeJohn Style</a> <a href="/tags/Objective-C/" style="font-size: 15px;">Objective-C</a> <a href="/tags/RunLoop/" style="font-size: 10px;">RunLoop</a> <a href="/tags/iOS事件响应/" style="font-size: 10px;">iOS事件响应</a> <a href="/tags/iOS基础/" style="font-size: 15px;">iOS基础</a> <a href="/tags/iOS多线程/" style="font-size: 15px;">iOS多线程</a> <a href="/tags/iOS学习笔记/" style="font-size: 20px;">iOS学习笔记</a> <a href="/tags/iOS开发/" style="font-size: 17.5px;">iOS开发</a> <a href="/tags/iOS消息循环/" style="font-size: 10px;">iOS消息循环</a> <a href="/tags/内存管理/" style="font-size: 12.5px;">内存管理</a> <a href="/tags/开源代码/" style="font-size: 17.5px;">开源代码</a>
 					</div>
 				</section>
 				
@@ -168,6 +168,65 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-「钻」研iOS 之深入理解NSRunLoop" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/" class="article-date">
+  	<time datetime="2017-02-12T02:32:21.000Z" itemprop="datePublished">2017-02-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/">『钻』研iOS 之 深入理解NSRunLoop</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>差不多2年前，我对<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSRunLoop_Class/index.html#//apple_ref/doc/uid/TP40003725">NSRunLoop</a>有过应用层面上的理解，现在我们通过苹果开源在github上的<a href="https://github.com/apple/swift-corelibs-foundation">swift-corelibs-foundation</a>来深入了解下苹果是如何实现的这个CFRunLoop(NSRunLoop是对CFRunLoop的封装)。<br>当然，还是2年前的那句话：<br><code>NSRunLoop</code>其英文释义一样，是运行一个无限循环，她是跟线程一起存在的。在主线程中NSRunLoop是默认启动的；在多线程中NSRunLoop默认不是启动的，需要开发者手动运行才能启动。 </p>
+<h2 id="RunLoop的概念：">RunLoop的概念：</h2><p>RunLoop本质上是一个<a href="https://en.wikipedia.org/wiki/Event_loop">Event Loop</a>，实现的是一个<code>do-while</code>循环，主要用来处理事件消息。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Objective-C/">Objective-C</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RunLoop/">RunLoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS事件响应/">iOS事件响应</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS基础/">iOS基础</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-「钻」研iOS 之内存管理2" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -680,65 +739,6 @@
       
         <p class="article-more-link">
           <a  href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-iOS学习笔记：iOS多线程的3种方式之NSThread" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/" class="article-date">
-  	<time datetime="2015-03-06T14:03:48.000Z" itemprop="datePublished">2015-03-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/">iOS学习笔记：iOS多线程的3种方式之NSThread</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/">GCD(Grand_Central_Dispatch)</a>。</p>
-<h2 id="为什么苹果要出3种多线程呢？">为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。<br>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS多线程/">iOS多线程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS学习笔记/">iOS学习笔记</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
