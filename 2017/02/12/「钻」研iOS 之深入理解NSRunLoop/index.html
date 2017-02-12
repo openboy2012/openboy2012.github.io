@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
+  <link rel="dns-prefetch" href="http://www.dejohndong.com">
   <title>『钻』研iOS 之深入理解NSRunLoop | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="差不多2年前，我对NSRunLoop有过应用层面上的理解，现在我们通过苹果开源在github上的swift-corelibs-foundation来深入了解下苹果是如何实现的这个CFRunLoop(NSRunLoop是对CFRunLoop的封装)。当然，还是2年前的那句话：NSRunLoop其英文释义一样，是运行一个无限循环，她是跟线程一起存在的。在主线程中NSRunLoop是默认启动的；在多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="『钻』研iOS 之深入理解NSRunLoop">
-<meta property="og:url" content="http://yoursite.com/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/index.html">
+<meta property="og:url" content="http://www.dejohndong.com/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
 <meta property="og:description" content="差不多2年前，我对NSRunLoop有过应用层面上的理解，现在我们通过苹果开源在github上的swift-corelibs-foundation来深入了解下苹果是如何实现的这个CFRunLoop(NSRunLoop是对CFRunLoop的封装)。当然，还是2年前的那句话：NSRunLoop其英文释义一样，是运行一个无限循环，她是跟线程一起存在的。在主线程中NSRunLoop是默认启动的；在多线程">
 <meta property="og:image" content="http://ipa-download.qiniudn.com/AAA622AD-DBF3-4D35-9086-333DDF9FE9AE.png">
@@ -338,7 +338,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.dejohndong.com/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -368,7 +368,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="「钻」研iOS 之深入理解NSRunLoop" data-title="『钻』研iOS 之深入理解NSRunLoop" data-url="http://yoursite.com/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/"></div>
+	<div class="ds-thread" data-thread-key="「钻」研iOS 之深入理解NSRunLoop" data-title="『钻』研iOS 之深入理解NSRunLoop" data-url="http://www.dejohndong.com/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -476,11 +476,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">iOS消息循环</a>
+                <a href="javascript:void(0)" class="js-tag color2">iOS多线程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">iOS多线程</a>
+                <a href="javascript:void(0)" class="js-tag color3">iOS消息循环</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,6 +504,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ARC & MRC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Block</a>
               </li>
              
@@ -512,19 +516,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ARC & MRC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DeJohn Style</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">RunLoop</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">iOS事件响应</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeJohn Style</a>
               </li>
             
             <div class="clearfix"></div>
