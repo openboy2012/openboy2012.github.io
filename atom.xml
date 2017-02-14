@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>DeJohn&#39;s Blog</title>
+  <subtitle>董佳的博客</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.dejohndong.com/"/>
+  <updated>2017-02-12T06:52:14.000Z</updated>
+  <id>http://www.dejohndong.com/</id>
+  
+  <author>
+    <name>DeJohn Dong</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>『钻』研iOS 之深入理解NSRunLoop</title>
+    <link href="http://www.dejohndong.com/2017/02/12/%E3%80%8C%E9%92%BB%E3%80%8D%E7%A0%94iOS%20%E4%B9%8B%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3NSRunLoop/"/>
+    <id>http://www.dejohndong.com/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/</id>
+    <published>2017-02-12T05:43:41.000Z</published>
+    <updated>2017-02-12T06:52:14.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;差不多2年前，我对&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSRunLoop_Class/index.html#//apple_ref/doc/uid/TP40003725&quot;&gt;NSRunLoop&lt;/a&gt;有过应用层面上的理解，现在我们通过苹果开源在github上的&lt;a href=&quot;https://github.com/apple/swift-corelibs-foundation&quot;&gt;swift-corelibs-foundation&lt;/a&gt;来深入了解下苹果是如何实现的这个CFRunLoop(NSRunLoop是对CFRunLoop的封装)。&lt;br&gt;当然，还是2年前的那句话：&lt;br&gt;&lt;code&gt;NSRunLoop&lt;/code&gt;其英文释义一样，是运行一个无限循环，她是跟线程一起存在的。在主线程中NSRunLoop是默认启动的；在多线程中NSRunLoop默认不是启动的，需要开发者手动运行才能启动。 &lt;/p&gt;
+&lt;h2 id=&quot;RunLoop的概念&quot;&gt;&lt;a href=&quot;#RunLoop的概念&quot; class=&quot;headerlink&quot; title=&quot;RunLoop的概念&quot;&gt;&lt;/a&gt;RunLoop的概念&lt;/h2&gt;&lt;p&gt;RunLoop本质上是一个&lt;a href=&quot;https://en.wikipedia.org/wiki/Event_loop&quot;&gt;Event Loop&lt;/a&gt;，实现的是一个&lt;code&gt;do-while&lt;/code&gt;循环，主要用来处理事件消息。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Objective-C" scheme="http://www.dejohndong.com/tags/Objective-C/"/>
+    
+      <category term="iOS基础" scheme="http://www.dejohndong.com/tags/iOS%E5%9F%BA%E7%A1%80/"/>
+    
+      <category term="RunLoop" scheme="http://www.dejohndong.com/tags/RunLoop/"/>
+    
+      <category term="iOS事件响应" scheme="http://www.dejohndong.com/tags/iOS%E4%BA%8B%E4%BB%B6%E5%93%8D%E5%BA%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>『钻』研iOS 之 内存管理（二）</title>
+    <link href="http://www.dejohndong.com/2017/02/06/%E3%80%8C%E9%92%BB%E3%80%8D%E7%A0%94iOS%20%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%862/"/>
+    <id>http://www.dejohndong.com/2017/02/06/「钻」研iOS 之内存管理2/</id>
+    <published>2017-02-06T12:00:29.000Z</published>
+    <updated>2017-02-12T07:07:50.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一讲中我把内存管理的基础、MRC与ARC作了自己的一些理解和经验分享，这一讲我会继续iOS内存管理方面的讲解。&lt;/p&gt;
+&lt;h2 id=&quot;Block的内存管理&quot;&gt;&lt;a href=&quot;#Block的内存管理&quot; class=&quot;headerlink&quot; title=&quot;Block的内存管理&quot;&gt;&lt;/a&gt;Block的内存管理&lt;/h2&gt;&lt;p&gt;Block有3种内存类型：&lt;br&gt;&lt;code&gt;NSGlobalBlock&lt;/code&gt;（全局块）：block内部没有引用任何外部变量的block是全局block（Global Block）；&lt;br&gt;&lt;code&gt;NSStackBlock&lt;/code&gt;（栈内存块）：block内部引用了block之外的外部变量的block是栈内存block（Stack Block）；&lt;br&gt;&lt;code&gt;NSMallocBlock&lt;/code&gt;（堆内存块）：block内部引用了block之外的外部变量的block并且被copy了一次是堆内存block（Malloc Block）。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Objective-C" scheme="http://www.dejohndong.com/tags/Objective-C/"/>
+    
+      <category term="iOS基础" scheme="http://www.dejohndong.com/tags/iOS%E5%9F%BA%E7%A1%80/"/>
+    
+      <category term="内存管理" scheme="http://www.dejohndong.com/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="Block" scheme="http://www.dejohndong.com/tags/Block/"/>
+    
+      <category term="C++混编" scheme="http://www.dejohndong.com/tags/C-%E6%B7%B7%E7%BC%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>『钻』研iOS 之 内存管理（一）</title>
+    <link href="http://www.dejohndong.com/2017/02/05/%E3%80%8C%E9%92%BB%E3%80%8D%E7%A0%94iOS%20%E4%B9%8B%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%861/"/>
+    <id>http://www.dejohndong.com/2017/02/05/「钻」研iOS 之内存管理1/</id>
+    <published>2017-02-05T01:20:33.000Z</published>
+    <updated>2017-02-12T06:50:54.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;iOS内存管理在我这6年工作经验过程中的变化可谓是翻天覆地，由于ARC（Automatic Refenerce Counting）的出现，大大简化了iOS开发者的内存管理优化工作。ARC不是垃圾回收机制，虽然开发者不用像以前那样刻意关心内存管理问题，但也不是意味着我们不需要了解iOS的内存管理。&lt;/p&gt;
+&lt;h2 id=&quot;堆（Heap）与栈-Stack&quot;&gt;&lt;a href=&quot;#堆（Heap）与栈-Stack&quot; class=&quot;headerlink&quot; title=&quot;堆（Heap）与栈(Stack)&quot;&gt;&lt;/a&gt;堆（Heap）与栈(Stack)&lt;/h2&gt;&lt;p&gt;讲到内存，不得不先讲下堆栈，堆和栈的定义大家自己&lt;a href=&quot;http://baike.baidu.com/link?url=2DK5Zuh6uTuATG_7IKOH8kNayWss2L_pOchRmk1mh6iYM5wo60g_QU1S4IoopLMQzy8f937n7U6_cwQSgZvRXnXo-b0QOEE2mfI3Ebo-u4S&quot;&gt;百度百科&lt;/a&gt;，本文不再展开，我只阐述自己的总结：&lt;br&gt;栈（操作系统）：由操作系统（编译器）自动分配释放，存放函数的参数值，局部变量的值、常量（int、bool）等。其操作方式类似于数据结构中的栈(Stack)。&lt;br&gt;堆（操作系统）：一般由程序员分配释放，一般的指针对象创建都存放在堆区，若程序员不释放，程序结束时可能由OS回收，分配方式类似于链表（Queue）。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Objective-C" scheme="http://www.dejohndong.com/tags/Objective-C/"/>
+    
+      <category term="iOS基础" scheme="http://www.dejohndong.com/tags/iOS%E5%9F%BA%E7%A1%80/"/>
+    
+      <category term="内存管理" scheme="http://www.dejohndong.com/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="ARC &amp; MRC" scheme="http://www.dejohndong.com/tags/ARC-MRC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[源码]iOS快速建模之DDModel</title>
+    <link href="http://www.dejohndong.com/2015/05/05/iOS%E5%BF%AB%E9%80%9F%E5%BB%BA%E6%A8%A1%E4%B9%8BDDModel/"/>
+    <id>http://www.dejohndong.com/2015/05/05/iOS快速建模之DDModel/</id>
+    <published>2015-05-04T23:06:30.000Z</published>
+    <updated>2017-02-12T06:55:19.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;DDModel概要&quot;&gt;&lt;a href=&quot;#DDModel概要&quot; class=&quot;headerlink&quot; title=&quot;DDModel概要&quot;&gt;&lt;/a&gt;DDModel概要&lt;/h2&gt;&lt;p&gt;不知不觉我已经毕业快4年了，iOS开发也做了4年多的时间了，也有了一定的经验积累，这次我将着重介绍我封装的模型基类–&lt;a href=&quot;https://github.com/openboy2012/DDModel&quot;&gt;DDModel&lt;/a&gt;。&lt;br&gt;DDModel封装了SQLite、HTTP以及JSON/XML的ORM特性，能快速搭建一个具有本地持久化，快速获取HTTP请求数据以及NSDictionary ORM到模型的模型层工具类，你只要根据自己的业务建模，极大地提高了开发的效率，把更多的精力放在UI的编写中去。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="开源代码" scheme="http://www.dejohndong.com/tags/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="iOS开发" scheme="http://www.dejohndong.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[源码]iOS数据持久化SQLitePersistentObject</title>
+    <link href="http://www.dejohndong.com/2015/05/04/iOS%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E4%B9%8BSQLitePersistentObject/"/>
+    <id>http://www.dejohndong.com/2015/05/04/iOS数据持久化之SQLitePersistentObject/</id>
+    <published>2015-05-04T13:24:19.000Z</published>
+    <updated>2017-02-12T06:55:43.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;源码概要&quot;&gt;&lt;a href=&quot;#源码概要&quot; class=&quot;headerlink&quot; title=&quot;源码概要&quot;&gt;&lt;/a&gt;源码概要&lt;/h2&gt;&lt;p&gt;iOS开发必然离不开的一个话题就是本地持久化，iOS本地持久化的方式有很多，如SQLite、CoreData等原生API，也有技术大牛对SQLite进行抽象封装以后产生的优秀SQLite插件–&lt;a href=&quot;https://github.com/ccgus/fmdb&quot;&gt;FMDB&lt;/a&gt;等，今天我向大家着重介绍一款被遗忘的SQLite ORM神器–&lt;a href=&quot;https://github.com/openboy2012/DDSQLiteKit.git&quot;&gt;SQLitePersistentObject&lt;/a&gt;,我要在iOS中将ORM进行到底。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="开源代码" scheme="http://www.dejohndong.com/tags/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="iOS开发" scheme="http://www.dejohndong.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客空间搬家</title>
+    <link href="http://www.dejohndong.com/2015/04/30/%E5%8D%9A%E5%AE%A2%E7%A9%BA%E9%97%B4%E6%90%AC%E5%AE%B6/"/>
+    <id>http://www.dejohndong.com/2015/04/30/博客空间搬家/</id>
+    <published>2015-04-30T13:50:21.000Z</published>
+    <updated>2017-02-12T06:53:29.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;事件起因&quot;&gt;&lt;a href=&quot;#事件起因&quot; class=&quot;headerlink&quot; title=&quot;事件起因&quot;&gt;&lt;/a&gt;事件起因&lt;/h2&gt;&lt;p&gt;之前我的博客一直挂在我同事服务器的虚拟空间里，使用的是wordpress的个人博客系统。&lt;br&gt;最近一段时间由于服务器故障，我总是发现自己的博客不能被访问。而且又觉得wordpress有很多的使用有限制，于是乎想弃用wordpress的解决方案，改用一些更加方便的好维护的方案来解决以上问题。  &lt;/p&gt;
+&lt;h2 id=&quot;解决过程&quot;&gt;&lt;a href=&quot;#解决过程&quot; class=&quot;headerlink&quot; title=&quot;解决过程&quot;&gt;&lt;/a&gt;解决过程&lt;/h2&gt;&lt;p&gt;通过搜索发现很多博客达人使用github+hexo的方式搭建免费又可以配置个人域名的博客空间，于是参照&lt;a href=&quot;http://blog.lmintlcx.com/post/blog-with-hexo.html&quot;&gt;该hexo搭建教程&lt;/a&gt;把hexo的个人博客给构建起来了&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="DeJohn Style" scheme="http://www.dejohndong.com/tags/DeJohn-Style/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS学习笔记：NSRunLoop的理解</title>
+    <link href="http://www.dejohndong.com/2015/03/17/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9ANSRunLoop%E7%9A%84%E7%90%86%E8%A7%A3/"/>
+    <id>http://www.dejohndong.com/2015/03/17/iOS学习笔记：NSRunLoop的理解/</id>
+    <published>2015-03-17T07:00:49.000Z</published>
+    <updated>2017-02-12T06:58:26.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;有没有好奇过iOS应用不是像C程序那样执行完main函数以后就退出了，还可以在点击按钮以后弹出一些交互UI，还能通过手势滑动UI(如UIScrollView、UITableView等)，这一切都是NSRunLoop在帮忙。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS学习笔记" scheme="http://www.dejohndong.com/tags/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="iOS消息循环" scheme="http://www.dejohndong.com/tags/iOS%E6%B6%88%E6%81%AF%E5%BE%AA%E7%8E%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS学习笔记：Category与Extension的区别</title>
+    <link href="http://www.dejohndong.com/2015/03/11/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9ACategory%E4%B8%8EExtension%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://www.dejohndong.com/2015/03/11/iOS学习笔记：Category与Extension的区别/</id>
+    <published>2015-03-11T09:18:49.000Z</published>
+    <updated>2017-01-10T00:55:08.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;##前言&lt;br&gt;作为一个有4年以上iOS开发经验的开者者来说，使用Category和Extension的场景应该是数不胜数的，也不知道从Xcode的哪个版本开始，创建一个新的UIViewController类会默认添加一个该类的Extension，而我也习惯于在这个Extension上添加一些不公开的属性。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS学习笔记" scheme="http://www.dejohndong.com/tags/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS学习笔记：iOS多线程的3种方式之GCD</title>
+    <link href="http://www.dejohndong.com/2015/03/07/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9AiOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%843%E7%A7%8D%E6%96%B9%E5%BC%8F%E4%B9%8BGCD/"/>
+    <id>http://www.dejohndong.com/2015/03/07/iOS学习笔记：iOS多线程的3种方式之GCD/</id>
+    <published>2015-03-07T02:12:24.000Z</published>
+    <updated>2017-02-12T06:56:00.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;众所周知：iOS的多线程的创建方式有3种：&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/&quot;&gt;NSThread&lt;/a&gt;, &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/&quot;&gt;NSOperation&lt;/a&gt; 和&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/&quot;&gt;GCD(Grand_Central_Dispatch)&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;为什么苹果要出3种多线程呢？&quot;&gt;&lt;a href=&quot;#为什么苹果要出3种多线程呢？&quot; class=&quot;headerlink&quot; title=&quot;为什么苹果要出3种多线程呢？&quot;&gt;&lt;/a&gt;为什么苹果要出3种多线程呢？&lt;/h2&gt;&lt;p&gt;答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析GCD的优缺点。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS学习笔记" scheme="http://www.dejohndong.com/tags/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="iOS多线程" scheme="http://www.dejohndong.com/tags/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS学习笔记：iOS多线程的3种方式之NSOperation</title>
+    <link href="http://www.dejohndong.com/2015/03/06/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9AiOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%843%E7%A7%8D%E6%96%B9%E5%BC%8F%E4%B9%8BNSOperation/"/>
+    <id>http://www.dejohndong.com/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/</id>
+    <published>2015-03-06T14:42:31.000Z</published>
+    <updated>2017-02-12T06:56:35.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;众所周知：iOS的多线程的创建方式有3种：&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/&quot;&gt;NSThread&lt;/a&gt;, &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/&quot;&gt;NSOperation&lt;/a&gt; 和&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/&quot;&gt;GCD(Grand_Central_Dispatch)&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;为什么苹果要出3种多线程呢？&quot;&gt;&lt;a href=&quot;#为什么苹果要出3种多线程呢？&quot; class=&quot;headerlink&quot; title=&quot;为什么苹果要出3种多线程呢？&quot;&gt;&lt;/a&gt;为什么苹果要出3种多线程呢？&lt;/h2&gt;&lt;p&gt;答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSOperation的优缺点。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS学习笔记" scheme="http://www.dejohndong.com/tags/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="iOS多线程" scheme="http://www.dejohndong.com/tags/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS学习笔记：iOS多线程的3种方式之NSThread</title>
+    <link href="http://www.dejohndong.com/2015/03/06/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9AiOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%843%E7%A7%8D%E6%96%B9%E5%BC%8F%E4%B9%8BNSThread/"/>
+    <id>http://www.dejohndong.com/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSThread/</id>
+    <published>2015-03-06T14:03:48.000Z</published>
+    <updated>2017-02-12T06:57:05.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;众所周知：iOS的多线程的创建方式有3种：&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/&quot;&gt;NSThread&lt;/a&gt;, &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/&quot;&gt;NSOperation&lt;/a&gt; 和&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/&quot;&gt;GCD(Grand_Central_Dispatch)&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;为什么苹果要出3种多线程呢？&quot;&gt;&lt;a href=&quot;#为什么苹果要出3种多线程呢？&quot; class=&quot;headerlink&quot; title=&quot;为什么苹果要出3种多线程呢？&quot;&gt;&lt;/a&gt;为什么苹果要出3种多线程呢？&lt;/h2&gt;&lt;p&gt;答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSThread的优缺点。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS学习笔记" scheme="http://www.dejohndong.com/tags/iOS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="iOS多线程" scheme="http://www.dejohndong.com/tags/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[源码]滚动的数字：FlickerNumber</title>
+    <link href="http://www.dejohndong.com/2015/03/02/%E6%BB%9A%E5%8A%A8%E7%9A%84%E6%95%B0%E5%AD%97%EF%BC%9AFlickerNumber/"/>
+    <id>http://www.dejohndong.com/2015/03/02/滚动的数字：FlickerNumber/</id>
+    <published>2015-03-02T14:50:32.000Z</published>
+    <updated>2017-02-12T06:54:28.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;最近的项目中要求实现支付宝的滚动数字的效果，查找到了一些第三方的代码，但是效果很不理想。  &lt;/p&gt;
+&lt;p&gt;求人不如求己，那我就自己动手来实现该效果。在学习github大牛的代码过程中，看到很多大牛都是用Category来扩展实现某些功能，&lt;br&gt;例如: SDWebImage中的UIImageView的Category、AFNetworking中的UIButton的Category等。&lt;/p&gt;
+&lt;p&gt;那我也尝试着使用Category的方式来实现该数字滚动的效果。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="开源代码" scheme="http://www.dejohndong.com/tags/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="iOS开发" scheme="http://www.dejohndong.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[源码]实现iOS的瀑布流：DDCollectionViewFlowLayout</title>
+    <link href="http://www.dejohndong.com/2015/02/25/%E5%AE%9E%E7%8E%B0iOS%E7%9A%84%E7%80%91%E5%B8%83%E6%B5%81%EF%BC%9ADDCollectionViewFlowLayout/"/>
+    <id>http://www.dejohndong.com/2015/02/25/实现iOS的瀑布流：DDCollectionViewFlowLayout/</id>
+    <published>2015-02-25T14:01:32.000Z</published>
+    <updated>2017-02-12T06:54:57.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;前段时间一直在做iOS客户端的64位适配，所以把开发项目设置成了最低系统要求为iOS6.0。空闲之余，准备把之前用UIScrollView实现的瀑布流用UICollectionView重新实现一下。&lt;br&gt;于是DDCollectionViewFlowLayout就这样诞生了。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="开源代码" scheme="http://www.dejohndong.com/tags/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81/"/>
+    
+      <category term="iOS开发" scheme="http://www.dejohndong.com/tags/iOS%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>你好，访客</title>
+    <link href="http://www.dejohndong.com/2015/02/13/%E4%BD%A0%E5%A5%BD%EF%BC%8C%E8%AE%BF%E5%AE%A2/"/>
+    <id>http://www.dejohndong.com/2015/02/13/你好，访客/</id>
+    <published>2015-02-13T00:52:36.000Z</published>
+    <updated>2015-05-20T22:13:06.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本人2011年开始从事iOS开发，目前混迹于嘉兴，一个小巧的城市，在这里你可以跟我交流iOS方面的所有技术。&lt;/p&gt;
+&lt;p&gt;我的github地址：&lt;a href=&quot;http://github.com/openboy2012&quot; target=&quot;_blank&quot; rel=&quot;ext
+    
+    </summary>
+    
+    
+      <category term="DeJohn Style" scheme="http://www.dejohndong.com/tags/DeJohn-Style/"/>
+    
+  </entry>
+  
+</feed>
