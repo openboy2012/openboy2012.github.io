@@ -164,6 +164,61 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-「钻」研iOS 之运行时runtime" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/12/「钻」研iOS 之运行时runtime/">『钻』研iOS 之运行时runtime</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/12/「钻」研iOS 之运行时runtime/" class="archive-article-date">
+  	<time datetime="2017-02-12T08:20:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="何为iOS的Runtime"><a href="#何为iOS的Runtime" class="headerlink" title="何为iOS的Runtime?"></a>何为iOS的Runtime?</h2><p>苹果是这样定义的：<code>The Objective-C runtime is a runtime library that provides support for the dynamic properties of the Objective-C language, and as such is linked to by all Objective-C apps.</code>，大概的意思是runtime是一个运行时的库，能给Objective-C提供动态特性的支持，苹果的所有基于Objective-C的app都会依赖于这个库。</p>
+<p>可以这么说，运行时库是Objective-C的运行基础。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSObject</span> *obj = [<span class="built_in">NSObject</span> alloc] init];</div><div class="line">``` </div><div class="line">该代码会在runtime下被编译器转换成：</div><div class="line">通过这个Clang命令：`clang -<span class="keyword">readwrite</span>-objc XXX.m -o XXX.cpp`</div><div class="line">```c++</div></pre></td></tr></table></figure></p>
+<p>isa：对象指向对象本身的指针，类指向类本身的指针。<br>@selector SEL 选择器，会先在类里注册这个方法<br>IMP 实现</p>
+<p>method_swizzling是交换IMP的实现</p>
+<p>+load<br>+initialization</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/12/「钻」研iOS 之运行时runtime/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-「钻」研iOS 之深入理解NSRunLoop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -801,75 +856,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-iOS学习笔记：iOS多线程的3种方式之NSOperation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/">iOS学习笔记：iOS多线程的3种方式之NSOperation</a>
-    </h1>
-  
-
-        
-        <a href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/" class="archive-article-date">
-  	<time datetime="2015-03-06T14:42:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-03-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>众所周知：iOS的多线程的创建方式有3种：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSThread_Class/">NSThread</a>, <a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSOperation_class/">NSOperation</a> 和<a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/">GCD(Grand_Central_Dispatch)</a>。</p>
-<h2 id="为什么苹果要出3种多线程呢？"><a href="#为什么苹果要出3种多线程呢？" class="headerlink" title="为什么苹果要出3种多线程呢？"></a>为什么苹果要出3种多线程呢？</h2><p>答案是创建多线种的需求千变万化，不是所有的方式都能解决需求，所以三者相互共存着。今天我就先来分析NSOperation的优缺点。<br>
-        
-          <a class="article-more-a" href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">iOS学习笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iOS多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2015/03/06/iOS学习笔记：iOS多线程的3种方式之NSOperation/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -963,11 +949,11 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">iOS多线程</a>
+                <a href="javascript:void(0)" class="js-tag color3">iOS消息循环</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">iOS消息循环</a>
+                <a href="javascript:void(0)" class="js-tag color2">iOS多线程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -995,6 +981,10 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">DeJohn Style</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Block</a>
               </li>
              
@@ -1008,10 +998,6 @@ var _hmt = _hmt || [];
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">iOS事件响应</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">DeJohn Style</a>
               </li>
             
             <div class="clearfix"></div>

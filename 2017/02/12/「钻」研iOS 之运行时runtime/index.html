@@ -6,24 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.dejohndong.com">
-  <title>『钻』研iOS 之 内存管理（一） | DeJohn&#39;s Blog</title>
+  <title>『钻』研iOS 之运行时runtime | DeJohn&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="iOS内存管理在我这6年工作经验过程中的变化可谓是翻天覆地，由于ARC（Automatic Refenerce Counting）的出现，大大简化了iOS开发者的内存管理优化工作。ARC不是垃圾回收机制，虽然开发者不用像以前那样刻意关心内存管理问题，但也不是意味着我们不需要了解iOS的内存管理。
-堆（Heap）与栈(Stack)讲到内存，不得不先讲下堆栈，堆和栈的定义大家自己百度百科，本文不再展开">
+  <meta name="description" content="何为iOS的Runtime?苹果是这样定义的：The Objective-C runtime is a runtime library that provides support for the dynamic properties of the Objective-C language, and as such is linked to by all Objective-C apps.，大概的意">
 <meta property="og:type" content="article">
-<meta property="og:title" content="『钻』研iOS 之 内存管理（一）">
-<meta property="og:url" content="http://www.dejohndong.com/2017/02/05/「钻」研iOS 之内存管理1/index.html">
+<meta property="og:title" content="『钻』研iOS 之运行时runtime">
+<meta property="og:url" content="http://www.dejohndong.com/2017/02/12/「钻」研iOS 之运行时runtime/index.html">
 <meta property="og:site_name" content="DeJohn's Blog">
-<meta property="og:description" content="iOS内存管理在我这6年工作经验过程中的变化可谓是翻天覆地，由于ARC（Automatic Refenerce Counting）的出现，大大简化了iOS开发者的内存管理优化工作。ARC不是垃圾回收机制，虽然开发者不用像以前那样刻意关心内存管理问题，但也不是意味着我们不需要了解iOS的内存管理。
-堆（Heap）与栈(Stack)讲到内存，不得不先讲下堆栈，堆和栈的定义大家自己百度百科，本文不再展开">
-<meta property="og:image" content="http://ipa-download.qiniudn.com/F70C808F-2445-4E7D-A219-3E1120CD105E.png">
-<meta property="og:image" content="https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Art/ARC_Illustration.jpg">
-<meta property="og:updated_time" content="2017-02-12T06:50:54.000Z">
+<meta property="og:description" content="何为iOS的Runtime?苹果是这样定义的：The Objective-C runtime is a runtime library that provides support for the dynamic properties of the Objective-C language, and as such is linked to by all Objective-C apps.，大概的意">
+<meta property="og:updated_time" content="2017-02-14T00:46:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="『钻』研iOS 之 内存管理（一）">
-<meta name="twitter:description" content="iOS内存管理在我这6年工作经验过程中的变化可谓是翻天覆地，由于ARC（Automatic Refenerce Counting）的出现，大大简化了iOS开发者的内存管理优化工作。ARC不是垃圾回收机制，虽然开发者不用像以前那样刻意关心内存管理问题，但也不是意味着我们不需要了解iOS的内存管理。
-堆（Heap）与栈(Stack)讲到内存，不得不先讲下堆栈，堆和栈的定义大家自己百度百科，本文不再展开">
-<meta name="twitter:image" content="http://ipa-download.qiniudn.com/F70C808F-2445-4E7D-A219-3E1120CD105E.png">
+<meta name="twitter:title" content="『钻』研iOS 之运行时runtime">
+<meta name="twitter:description" content="何为iOS的Runtime?苹果是这样定义的：The Objective-C runtime is a runtime library that provides support for the dynamic properties of the Objective-C language, and as such is linked to by all Objective-C apps.，大概的意">
   
   
     <link rel="icon" href="/favicon.png">
@@ -169,53 +163,31 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-「钻」研iOS 之内存管理1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-「钻」研iOS 之运行时runtime" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      『钻』研iOS 之 内存管理（一）
+      『钻』研iOS 之运行时runtime
     </h1>
   
 
         
-        <a href="/2017/02/05/「钻」研iOS 之内存管理1/" class="archive-article-date">
-  	<time datetime="2017-02-05T01:20:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-05</time>
+        <a href="/2017/02/12/「钻」研iOS 之运行时runtime/" class="archive-article-date">
+  	<time datetime="2017-02-12T08:20:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>iOS内存管理在我这6年工作经验过程中的变化可谓是翻天覆地，由于ARC（Automatic Refenerce Counting）的出现，大大简化了iOS开发者的内存管理优化工作。ARC不是垃圾回收机制，虽然开发者不用像以前那样刻意关心内存管理问题，但也不是意味着我们不需要了解iOS的内存管理。</p>
-<h2 id="堆（Heap）与栈-Stack"><a href="#堆（Heap）与栈-Stack" class="headerlink" title="堆（Heap）与栈(Stack)"></a>堆（Heap）与栈(Stack)</h2><p>讲到内存，不得不先讲下堆栈，堆和栈的定义大家自己<a href="http://baike.baidu.com/link?url=2DK5Zuh6uTuATG_7IKOH8kNayWss2L_pOchRmk1mh6iYM5wo60g_QU1S4IoopLMQzy8f937n7U6_cwQSgZvRXnXo-b0QOEE2mfI3Ebo-u4S" target="_blank" rel="external">百度百科</a>，本文不再展开，我只阐述自己的总结：<br>栈（操作系统）：由操作系统（编译器）自动分配释放，存放函数的参数值，局部变量的值、常量（int、bool）等。其操作方式类似于数据结构中的栈(Stack)。<br>堆（操作系统）：一般由程序员分配释放，一般的指针对象创建都存放在堆区，若程序员不释放，程序结束时可能由OS回收，分配方式类似于链表（Queue）。<br><a id="more"></a><br>本文主要围绕着堆区（Heap）的内存管理进行讲解。</p>
-<h2 id="Reference-Counting"><a href="#Reference-Counting" class="headerlink" title="Reference Counting"></a>Reference Counting</h2><p>先讲「Reference Counting」引用计数，不管是MRC或者ARC都会有这个Reference Counting。Objective-C的内存管理方式采用的是保留计数（retainCount）的方式来保证内存的可用性，内存初始化（alloc&amp;init）的时候retainCount为1，当内存被其他指针引用（retain）一次以后该内存的retainCount会+1，当引用的这块内存的这个指针被释放（release）一次以后该内存的retainCount会-1，当retainCount=0时内存会被标记为可回收，会执行dealloc方法进行真正的资源释放销毁操作。<br>如果内存在不再使用的时候retainCount没有变成0（指针已经置成nil，但当时分配的对象没有release的情况下，形成了野指针），那就是内存泄露（Memory leak）；<br>如果内存在使用的时候retainCount已经为0（指针的地址还是存在，但这个地址已经被release的情况下）的时候，那就是内存溢出（EXC_BAD_ACCESS）。<br>引用计数的概念在很多语言中都有体现：比如C++的智能指针：std::shared_ptr。还有更多<a href="https://en.wikipedia.org/wiki/Reference_counting" target="_blank" rel="external">Reference Counting</a>的说明请看<a href="https://en.wikipedia.org/wiki/Reference_counting" target="_blank" rel="external">Wiki</a>。</p>
-<h2 id="MRC时代（Before-2012）"><a href="#MRC时代（Before-2012）" class="headerlink" title="MRC时代（Before 2012）"></a>MRC时代（Before 2012）</h2><p><code>广告</code>：更多代码<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">demo</a>可以进入我的<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">github</a>进行下载查看运行结果，基本上每行关键代码都有详细的注释。本文中出现的代码都在这个项目下面，请结合项目代码阅读本文，效果更佳。</p>
-<p>MRC（Mannual Reference Counting）手动引用计数内存管理，就是Objective-C对象的内存的创建和释放需要开发者手动管理。<br>先看一段非在NSAutoReleasePool的代码栗子(UI元素相关的「简单」代码)：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//interface</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">retain</span>) <span class="built_in">UIButton</span> *btnMRC; <span class="comment">//MRC用retain修饰对象，保持内存持有</span></div><div class="line"></div><div class="line"><span class="comment">//implementation</span></div><div class="line">- (<span class="keyword">void</span>)dealloc</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_btnMRC.retainCount is %lu"</span>, _btnMRC.retainCount);</div><div class="line">    <span class="comment">//[_btnMRC release]; //这里release需要注意，如果构建的指针对象是通过实例方法创建如alloc、new等，这里需要release一次，否则</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_btnMRC.retainCount is %lu"</span>, _btnMRC.retainCount);</div><div class="line">    [<span class="keyword">super</span> dealloc];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="comment">// Do any additional setup after loading the view.</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_btnMRC.retainCount is %lu"</span>, _btnMRC.retainCount);</div><div class="line">    _btnMRC = [<span class="built_in">UIButton</span> buttonWithType:<span class="built_in">UIButtonTypeCustom</span>]; <span class="comment">//类方法创建的对象在ARC的情况下会默认加上autorelease,所以在dealloc不需要再手动释放</span></div><div class="line">    <span class="comment">//_btnMRC = [[UIButton alloc] init]; //实例方法创建的对象，需要dealloc的时候进行一次release释放</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_btnMRC.retainCount is %lu"</span>, _btnMRC.retainCount);</div><div class="line">    [<span class="keyword">self</span>.view addSubview:_btnMRC]; <span class="comment">//addSubView方法会retainCount+1</span></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"_btnMRC.retainCount is %lu"</span>, _btnMRC.retainCount);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</div><div class="line">    [_btnMRC setFrame:<span class="built_in">CGRectMake</span>(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100.0</span>, <span class="number">20</span>)];</div><div class="line">    [_btnMRC setTitle:<span class="string">@"MRC Button"</span> forState:<span class="built_in">UIControlStateNormal</span>];</div><div class="line">    _btnMRC.backgroundColor = [<span class="built_in">UIColor</span> redColor];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidUnload</div><div class="line">&#123;</div><div class="line"><span class="meta">#warning iOS 6.0以前如果收到memory warning的警告，系统会先viewDidUnload来处理view的释放，如果不在viewDidUnload里处理释放操作，然后系统会重新加载viewDidLoad方法，如果那里的UI内存没有处理得很好，很容易造成野指针的内存泄露。iOS 6.0以后已经废弃了这个方法，跟进ARC的进度</span></div><div class="line"><span class="comment">//    [self.btnMRC release];</span></div><div class="line">    [<span class="keyword">super</span> viewDidUnload];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</div><div class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</div><div class="line">    <span class="comment">// Dispose of any resources that can be recreated.</span></div><div class="line"><span class="meta">#warning iOS 6.0 以后在这里处理非UI资源的释放内存</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>PS:这里我使用的是内部变量的指针（带_），从Xcode 4.4版本开始已经可以不显示调用@synthesize来合成get/set方法了，在.m文件内部可以直接用_xxx替代@property声明了变量xxx。这个也是Clang编译器的功劳。</p>
-<p>这么多代码只完成了一个简单Button的手动引用计数内存管理，那么在一个复杂界面的UIViewController中有很多的UI元素和其他成员变量，每个对象都需要这么细心地去处理内存管理，这是一件多么恐怖的事情。</p>
-<p>MRC时代的UIViewController实现文件随随便便都是好几千行代码，不管是阅读还是维护，都是让人心里抓狂的。</p>
-<p>再来看个NSAutoReleasePool的代码栗子:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)testAutoReleasePool</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"====== autoreleasepool method begin ======"</span>); <span class="comment">//增加打印分割标识</span></div><div class="line">    <span class="built_in">NSAutoreleasePool</span> *pool = <span class="literal">nil</span>; <span class="comment">//声明一个显式的NSAutoReleasePool</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.switchShowAutoReleasePool.on) &#123;<span class="comment">//是否初始化显式的NSAutoReleasePool</span></div><div class="line">         pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init]; <span class="comment">//显式创建一个NSAutoReleasePool</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.switchAutoRelease.on) &#123;</div><div class="line">            __unused DDObject *object = [[[DDObject alloc] init] autorelease]; <span class="comment">//有autorelease关键字方法，会自动加标识到NSAutoReleasePool里去：如果有显式创建的pool存在，该对象会在显式的Pool里被标识，当Pool释放时该对象；如果没有显示的Pool，会加到系统自动创建的NSAutoReleasePool（隐式的Pool）里去，跟NSRunLoop有关，该Pool会在当次RunLoop结束时执行release。通常是『&#123;&#125;』的&#125;的时候触发，看打印结果可知。</span></div><div class="line"></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            DDObject *object = [[DDObject alloc] init];</div><div class="line">            [object release]; <span class="comment">//创建以后就release释放</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.switchShowAutoReleasePool.on) &#123;<span class="comment">//是否初始化显式的NSAutoReleasePool</span></div><div class="line">        [pool release];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"====== autoreleasepool method end ======"</span>);  <span class="comment">//增加打印分割标识</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>以上代码的运行结果如下：<br><img src="http://ipa-download.qiniudn.com/F70C808F-2445-4E7D-A219-3E1120CD105E.png" width="714"></p>
-<p><code>广告</code>：更多代码<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">demo</a>可以进入我的<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">github</a>进行下载查看运行结果，基本上每行代码都有详细的注释。本文中出现的代码都在这个项目下面，请结合项目代码阅读本文，效果更佳。</p>
-<p>NSAutoReleasePool的显式调用会改变对象的生命周期，原本应该在方法块外部执行dealloc的对象会被提前执行，所以NSAutoReleasePool以及autorelease关键字方法的不合理使用，都会造成一些莫名奇妙的问题，如果你不了解iOS内存管理，在那时候真的很难写出漂亮的代码出来。</p>
-<p>下面来解释下出现的关键字方法：<br><code>alloc&amp;init</code>：通常情况下2个方法是同时出现的，初始化一个对象，分配内存空间，所以当前对象的retainCount为1；<br><code>retain</code>：对象的retainCount+1；<br><code>release</code>：对象的retainCount-1；<br><code>copy</code>:对象的retainCount+1；<br><code>addSubview</code>：仅限于UI的元素对象。同retain的效果，retainCount会+1；同理<br><code>removeFromSuperView</code>方法调用的时候会retainCount-1；<br>removeFromSuperView方法通常由系统自动完成;<br><code>autorelease</code>：会把对象加入到就近的NSAutoReleasePool（显式优先），当Pool释放时对该对象进行一次release操作。<br><code>dealloc</code>：当对象的retainCount为0的时候会调用这个方法，用来销毁对象的内部处理。</p>
-<h3 id="dealloc的线程小知识"><a href="#dealloc的线程小知识" class="headerlink" title="dealloc的线程小知识"></a>dealloc的线程小知识</h3><p>dealloc方法的执行线程是对象最后一次release的线程，这里就会存在一个问题：如果在dealloc里发生了非常耗时的操作，就会出现主线程卡住的情况，通常我们会重载UIViewController的dealloc方法（基本上都是主线程）来释放一些资源，比如通知（NSNotification）的移除、C++的跨平台库的析构等。如果C++的跨平台库的析构出现了耗时操作，很有可能会卡我们的主线程，所以使用的时候要格外的注意。</p>
-<p>PS:写这么多代码我只是想表达之前手动管理有多么地复杂，iOS开发的入门门槛也比现在高很多。最重要的事，我只是想表达：我确确实实是从那个时代过来了，真真实实得写了这么多年的代码&gt;_&lt;</p>
-<p>好在苹果的工程师们早早得注意到了这个问题，设计了这个<a href="https://en.wikipedia.org/wiki/Clang" target="_blank" rel="external">Clang</a>编译器以及ARC的内存管理方式，替开发者来处理内存管理的事情，大大促进了iOS的开发效率，也大大降低了iOS开发的门槛。</p>
-<h2 id="ARC时代-2012-至今"><a href="#ARC时代-2012-至今" class="headerlink" title="ARC时代(2012~至今)"></a>ARC时代(2012~至今)</h2><p>ARC（Automatic Reference Counting）自动引用计数内存管理，通过编译器（Clang Complier），本质上还是会使用到retain、release等关键字方法，只是不是开发者手动添加，而是编译器在编译过程中添加retain、release等关键字方法到相应的代码行。</p>
-<p><img src="https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Art/ARC_Illustration.jpg" ,="" width="751"></p>
-<p>还是先来看看之前的代码在ARC环境下是怎么样的：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//interface</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIButton</span> *btnARC; <span class="comment">//ARC环境下用strong保持强引用关系</span></div><div class="line"></div><div class="line"><span class="comment">//implementation</span></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="comment">// Do any additional setup after loading the view.</span></div><div class="line">    <span class="comment">/* </span></div><div class="line">     ARC环境下，Clang编译器会对_btnARC进行retain方法，所以开发者无需显示调用retain方法，而且Clang编译器已经在ARC环境下把retain方法标记为不可用。</div><div class="line">     */</div><div class="line">    _btnARC = [<span class="built_in">UIButton</span> buttonWithType:<span class="built_in">UIButtonTypeCustom</span>]; <span class="comment">//ARC情况下不需要特别关心内存管理，开发门槛大大降低。</span></div><div class="line">    <span class="comment">//_btnARC = [[UIButton alloc] init];</span></div><div class="line">    [<span class="keyword">self</span>.view addSubview:_btnARC];</div><div class="line">    .</div><div class="line">    .</div><div class="line">    .</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidAppear:(<span class="built_in">BOOL</span>)animated</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> viewDidAppear:animated];</div><div class="line">    [_btnARC setFrame:<span class="built_in">CGRectMake</span>(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100.0</span>, <span class="number">20</span>)];</div><div class="line">    [_btnARC setTitle:<span class="string">@"ARC Button"</span> forState:<span class="built_in">UIControlStateNormal</span>];</div><div class="line">    _btnARC.backgroundColor = [<span class="built_in">UIColor</span> redColor];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)didReceiveMemoryWarning &#123;</div><div class="line">    [<span class="keyword">super</span> didReceiveMemoryWarning];</div><div class="line">    <span class="comment">// Dispose of any resources that can be recreated.</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>啥？只有么点？对，确实只要这些，编译器已经帮开发者加了上内存管理的方法(retain/release)代码，所以ARC下无需特别关注iOS的内存管理。只需要了解以下关键字即可：<br><code>__strong/strong</code>：强引用，与MRC下的retain对应，在编译阶段加上的是retain方法，会对引用计数作增加；<br><code>__weak/weak</code>：弱引用，引用计数不发生变化，某些特定情况下与MRC的assign对应；<br><code>copy</code>：一般情况下是浅拷贝，某些特定条件下是深拷贝（下一讲我会仔细讲解『深拷贝与浅拷贝』）；<br><code>__autoreleasing</code>：ARC环境下标识autorelease方法关键字，在编译阶段加上的是autorelease方法；<br><code>__unsafe_unretained</code>：弱引用，引用计数不发生变化，与weak的区别是这个处理在内存对象被释放以后不会对指针地址置成nil，weak会在释放对象以后把指针地址置成nil。</p>
-<p>再来看下AutoReleasePool在ARC的情况下的代码实现：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">IBAction</span>)testAutoReleasePool</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"====== autoreleasepool method begin ======"</span>); <span class="comment">//增加打印分割标识</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.switchShowAutoReleasePool.on) &#123;<span class="comment">//是否初始化显式的@autoreleasepool</span></div><div class="line">        <span class="keyword">@autoreleasepool</span> &#123; <span class="comment">//创建显示autorelease pool，与NSAutoReleasePool的效果一样</span></div><div class="line">            [<span class="keyword">self</span> doForMethod]; <span class="comment">//执行for循环方法</span></div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        [<span class="keyword">self</span> doForMethod];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"====== autoreleasepool method end ======"</span>);  <span class="comment">//增加打印分割标识</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)doForMethod &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.switchAutoRelease.on) &#123; <span class="comment">//是否使用__autoreleasing关键字</span></div><div class="line">            __unused __autoreleasing DDObject *object = [[DDObject alloc] init]; <span class="comment">//有__autoreleasing关键字方法,与MRC下的autorelease效果一样</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            __unused DDObject *object = [[DDObject alloc] init]; <span class="comment">//编译器会自动加上release</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><code>广告</code>：更多代码<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">demo</a>可以进入我的<a href="https://github.com/openboy2012/DDCategory" target="_blank" rel="external">github</a>进行下载查看运行结果，基本上每行关键代码都有详细的注释。本文中出现的代码都在这个项目下面，请结合项目代码阅读本文，效果更佳。</p>
-<p>执行这段代码的打印效果与MRC是一模一样的（同样参考MRC运行的结果图）。只是<code>@autoreleasepool{}</code>调用更加简单，从代码和运行结果中也可以得出结论：默认状态下编译器（Clang Complier）对Objective-C的对象只会加上release的关键字方法（打印信息是alloc与dealloc交叉的那种情况），相对来说编译器并没有想象中的那么智能。<br>在高级编程情况下还是需要开发者合理地使用<code>@autoreleasepool</code>和<code>__autoreleasing</code>关键字来控制对象的生命周期。<br>如何合理？就是需要明白iOS的内存管理的精髓–真正了解MRC的工作原理。</p>
-<p>从AutoReleasePool的栗子可以分析出来，ARC与MRC内存管理的底层实现其实没有什么变化，只是苹果的工程师们在ARC环境的设计理念下花了大量精力把内存管理的工作交给了编译器来处理，简化开发内存管理的工作。 </p>
-<h3 id="assign与weak的区别"><a href="#assign与weak的区别" class="headerlink" title="assign与weak的区别"></a>assign与weak的区别</h3><p><code>assign</code>：ARC&amp;MRC环境下通用，通常修饰的是常量，比如int、bool等；在MRC环境下，@property时可以修饰（id<delegate>对象）来防止循环引用、可以修饰IBOutlet出来的UI元素对象、当然也可以修饰不想对retainCount作增加的对象（引用计数不发生变化）；<br><code>weak</code>：只能在ARC环境下使用，weak只能修饰OC对象（包含delegate），不能修饰常量或者其他非OC对象。</delegate></p>
-<p>下一讲我会讲解『block内存管理』、『C++混编的内存管理』和『深拷贝与浅拷贝』。 </p>
-<p>参考资料：<br><a href="http://baike.baidu.com/link?url=2DK5Zuh6uTuATG_7IKOH8kNayWss2L_pOchRmk1mh6iYM5wo60g_QU1S4IoopLMQzy8f937n7U6_cwQSgZvRXnXo-b0QOEE2mfI3Ebo-u4S" target="_blank" rel="external">堆栈</a><br><a href="https://en.wikipedia.org/wiki/Automatic_Reference_Counting" target="_blank" rel="external">Automatic Reference Counting</a><br><a href="https://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html" target="_blank" rel="external">Transitioning to ARC Release Notes</a><br><a href="https://en.wikipedia.org/wiki/Clang" target="_blank" rel="external">Clang</a></p>
+        <h2 id="何为iOS的Runtime"><a href="#何为iOS的Runtime" class="headerlink" title="何为iOS的Runtime?"></a>何为iOS的Runtime?</h2><p>苹果是这样定义的：<code>The Objective-C runtime is a runtime library that provides support for the dynamic properties of the Objective-C language, and as such is linked to by all Objective-C apps.</code>，大概的意思是runtime是一个运行时的库，能给Objective-C提供动态特性的支持，苹果的所有基于Objective-C的app都会依赖于这个库。</p>
+<p>可以这么说，运行时库是Objective-C的运行基础。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSObject</span> *obj = [<span class="built_in">NSObject</span> alloc] init];</div><div class="line">``` </div><div class="line">该代码会在runtime下被编译器转换成：</div><div class="line">通过这个Clang命令：`clang -<span class="keyword">readwrite</span>-objc XXX.m -o XXX.cpp`</div><div class="line">```c++</div></pre></td></tr></table></figure></p>
+<p>isa：对象指向对象本身的指针，类指向类本身的指针。<br>@selector SEL 选择器，会先在类里注册这个方法<br>IMP 实现</p>
+<p>method_swizzling是交换IMP的实现</p>
+<p>+load<br>+initialization</p>
 
       
 
@@ -255,29 +227,6 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Objective-C</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">iOS基础</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">内存管理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ARC & MRC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -328,7 +277,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.dejohndong.com/2017/02/05/「钻」研iOS 之内存管理1/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.dejohndong.com/2017/02/12/「钻」研iOS 之运行时runtime/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -342,18 +291,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2017/02/06/「钻」研iOS 之内存管理2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          『钻』研iOS 之 内存管理（二）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/05/05/iOS快速建模之DDModel/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">[源码]iOS快速建模之DDModel</div>
+    <a href="/2017/02/12/「钻」研iOS 之深入理解NSRunLoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">『钻』研iOS 之深入理解NSRunLoop</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -367,7 +307,7 @@ var _hmt = _hmt || [];
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="「钻」研iOS 之内存管理1" data-title="『钻』研iOS 之 内存管理（一）" data-url="http://www.dejohndong.com/2017/02/05/「钻」研iOS 之内存管理1/"></div>
+	<div class="ds-thread" data-thread-key="「钻」研iOS 之运行时runtime" data-title="『钻』研iOS 之运行时runtime" data-url="http://www.dejohndong.com/2017/02/12/「钻」研iOS 之运行时runtime/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
